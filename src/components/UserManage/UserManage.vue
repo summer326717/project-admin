@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>用户管理</span><button class="btn-normal" @click="reloadAgent()">刷新</button></p>
+            <p><span>用户管理</span><button class="btn-normal" @click="reloadUser()">刷新</button></p>
         </div>
         <div class="m-limit">
             <div class="m-title">
@@ -84,9 +84,9 @@ export default {
       let json = {
         pageNo: this.pageNo,
         pageSize: this.pageSize,
-        agentId: '',
-        mobile: '',
-        nickName: '',
+        agentId: this.agentId,
+        mobile: this.mobile,
+        nickName: this.nickName,
         sortType: this.sortType,
         resultList: this.resultList
       }
@@ -103,6 +103,14 @@ export default {
     addUser () {
       // 添加
       this.$router.push({path: 'UserDetail', query: { type: 1 }})
+    },
+    reloadUser () {
+      this.pageNo = 1
+      this.pageSize = 10
+      this.mobile = ''
+      this.nickName = ''
+      this.agentId = ''
+      this.sortType = 2
     }
   }
 }

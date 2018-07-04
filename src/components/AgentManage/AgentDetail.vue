@@ -1,31 +1,31 @@
 <template>
     <div class="manage-detail">
         <div v-if='type==1||type==3'>
-            <div>
-                <span>账户</span>
-                <input type="text" v-model="account" placeholder="请输入账户">
+            <div class="item">
+                <span class="left-span">*账户</span>
+                <input class="ipt-normal" type="text" v-model="account" placeholder="请输入账户">
             </div>
-            <div>
-                <span>姓名</span>
-                <input type="text" v-model="name" placeholder="请输入姓名">
+            <div class="item">
+                <span class="left-span">*姓名</span>
+                <input class="ipt-normal" type="text" v-model="name" placeholder="请输入姓名">
             </div>
-            <div>
-                <span>手机号码</span>
-                <input type="text" placeholder="请输入手机号码" v-model="mobile">
+            <div class="item">
+                <span class="left-span">*手机号码</span>
+                <input class="ipt-normal" type="text" placeholder="请输入手机号码" v-model="mobile">
             </div>
-            <div>
-                <span>性别</span>
+            <div class="item">
+                <span class="left-span">*性别</span>
                 <input type="checkbox">
                 <span>男</span>
                 <input type="checkbox">
                 <span>女</span>
             </div>
-            <div>
-                <span>身份证号</span>
-                <input type="text" placeholder="请输入身份证件号" v-model="idNumber">
+            <div class="item">
+                <span class="left-span">*身份证号</span>
+                <input class="ipt-normal" type="text" placeholder="请输入身份证件号" v-model="idNumber">
             </div>
             <div>
-                <span>身份证照片</span>
+                <span class="left-span">*身份证照片</span>
                 <div>
                     <p>tupian</p>
                     <form enctype="multipart/form-data" style="display:none" id="uploadForm_default_tea">
@@ -33,40 +33,33 @@
                     <input type="hidden" name="goods" value="123456" />
                     </form>
                     <p><span @click="uploadImg">+</span><button>修改</button></p>
-                </div>
-            </div>
-            <div>
-                <span>身份证照片</span>
-                <div>
-                    <p>tupian</p>
-                    <p><span>背面照</span><button>修改</button></p>
                 </div>
             </div>
             <div><button @click="SaveAgent">保存</button></div>
         </div>
         <div v-if='type==2'>
-            <div>
-                <span>账户</span>
+            <div class="item">
+                <span class="left-span">代理人ID</span>
+                <span>{{userDetail.agentId}}</span>
+            </div>
+            <div class="item">
+                <span class="left-span">账户</span>
                 <span>{{userDetail.account}}</span>
             </div>
-            <div>
-                <span>姓名</span>
+            <div class="item">
+                <span class="left-span">姓名</span>
                 <span>{{userDetail.name}}</span>
             </div>
-            <div>
-                <span>手机号码</span>
+            <div class="item">
+                <span class="left-span">手机号码</span>
                 <span>{{userDetail.mobile}}</span>
             </div>
-            <div>
-                <span>性别</span>
-                <span>{{userDetail.sex}}</span>
-            </div>
-            <div>
-                <span>身份证号</span>
+            <div class="item">
+                <span class="left-span">身份证号</span>
                 <span>{{userDetail.idNumber}}</span>
             </div>
-            <div>
-                <span>身份证照片</span>
+            <div class="item">
+                <span class="left-span">身份证照片</span>
                 <div>
                     <p>tupian</p>
                     <form enctype="multipart/form-data" style="display:none" id="uploadForm_default_tea">
@@ -76,12 +69,17 @@
                     <p><span @click="uploadImg">+</span><button>修改</button></p>
                 </div>
             </div>
-            <div>
-                <span>身份证照片</span>
-                <div>
-                    <p>tupian</p>
-                    <p><span>背面照</span><button>修改</button></p>
-                </div>
+            <div class="item">
+                <span class="left-span">客户数量</span>
+                <span>{{userDetail.customerNum}}人</span>
+            </div>
+            <div class="item">
+                <span class="left-span">注册时间</span>
+                <span>{{userDetail.createTime}}</span>
+            </div>
+            <div class="item">
+                <span class="left-span">活跃时间</span>
+                <span>{{userDetail.updateTime}}</span>
             </div>
         </div>
     </div>

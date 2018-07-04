@@ -36,9 +36,9 @@
                         <th>操作</th>
                     </tr>
                     <tr v-for="(item,i) in dataList" :key="i">
-                        <td>--</td>
+                        <td></td>
+                        <td>{{i+(pageNo-1)*pageSize}}</td>
                         <td>{{item.userId}}</td>
-                        <td>--</td>
                         <td>--</td>
                         <td>--</td>
                         <td>--</td>
@@ -46,7 +46,8 @@
                         <td>--</td>
                         <td>
                           <button class="btn-normal" @click='passMethod(item.userWithdrawId)'>通过</button>
-                          <button class="btn-normal" @click='passMethod(item.userWithdrawId)'>拒绝</button></td>
+                          <button class="btn-normal" @click='passMethod(item.userWithdrawId)'>拒绝</button>
+                        </td>
                     </tr>
                 </table>
             </div>
@@ -73,9 +74,10 @@ export default {
   methods: {
     getData () {
       let json = {
-        alipay: '',
+        alipay: '', // 支付宝账号
         pageNo: this.pageNo,
         pageSize: this.pageSize,
+        state: 0, // 提现申请状态
         userId: ''
       }
       this.$axiosPost('/back/queryWithdrawInfoList', json).then((res) => {

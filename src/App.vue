@@ -130,7 +130,24 @@ input,button {
     padding: 18px 0;
     border: 1px solid #EAEAEA;
 }
+.manage-detail {
+    padding-top: 50px;
+}
 .manage-detail .ipt-normal {
-    
+    width: 346px;
+    height: 36px;
+    line-height: 36px;
+    padding-left: 10px;
+    border-radius: 6px;
+    border: 1px solid #EBEBEB;
+}
+.manage-detail .left-span {
+    width: 40%;
+    display: inline-block;
+    text-align: right;
+    padding-right: 15px;
+}
+.manage-detail .item {
+    padding: 14px 0;
 }
 </style>

@@ -1,31 +1,31 @@
 <template>
-    <div>
+    <div class="manage-detail">
         <div v-if='type===1||type==3'>
-            <div>
-                <span>账户</span>
-                <input type="text" v-model="account" placeholder="请输入姓名">
+            <div class="item">
+                <span class="left-span">账户</span>
+                <input class="ipt-normal" type="text" v-model="account" placeholder="请输入姓名">
+            </div>
+            <div class="item">
+                <span class="left-span">姓名</span>
+                <input class="ipt-normal" type="text" v-model="nickName" placeholder="请输入姓名">
+            </div>
+            <div class="item">
+                <span class="left-span">手机号码</span>
+                <input class="ipt-normal" type="text" v-model="mobile" placeholder="请输入手机号码">
             </div>
             <div>
-                <span>姓名</span>
-                <input type="text" v-model="nickName" placeholder="请输入姓名">
+                <span class="left-span">微信/QQ</span>
+                <input class="ipt-normal" type="text" placeholder="请输入微信/QQ" disabled>
             </div>
-            <div>
-                <span>手机号码</span>
-                <input type="text" v-model="mobile" placeholder="请输入手机号码">
-            </div>
-            <!--<div>
-                <span>微信/QQ</span>
-                <input type="text" placeholder="请输入微信/QQ">
-            </div>-->
-            <div>
-                <span>性别</span>
+            <div class="item">
+                <span class="left-span">性别</span>
                 <input type="checkbox">
                 <span>男</span>
                 <input type="checkbox">
                 <span>女</span>
             </div>
-            <div>
-                <span>代理人</span>
+            <div class="item">
+                <span class="left-span">代理人</span>
                 <select>
                     <option>选择代理人</option>
                 </select>
@@ -42,24 +42,24 @@
             <div><button @click="saveUser">保存</button></div>
         </div>
         <div v-if='type===2'>
-            <div>
-                <span>账户</span>
+            <div class="item">
+                <span class="left-span">账户</span>
                 <span>{{account}}</span>
             </div>
-            <div>
-                <span>姓名</span>
+            <div class="item">
+                <span class="left-span">姓名</span>
                 <span>{{nickName}}</span>
             </div>
-            <div>
-                <span>手机号码</span>
+            <div class="item">
+                <span class="left-span">手机号码</span>
                 <span>{{mobile}}</span>
             </div>
-            <div>
-                <span>性别</span>
+            <div class="item">
+                <span class="left-span">性别</span>
                 <span>{{sex}}</span>
             </div>
-            <div>
-                <span>代理人</span>
+            <div class="item">
+                <span class="left-span">代理人</span>
                 <span>{{agentId}}</span>
             </div>
         </div>

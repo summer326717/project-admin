@@ -19,8 +19,20 @@
         <div class="m-table">
             <div class="m-title">
                 <span>数据列表</span>
-                <span class="right">显示条数</span>
-                <span class="right">排序方式</span>
+                <span class="right">
+                  <select @change="changeSort" v-model="sortType">
+                    <option value='0' disabled>排序方式</option>
+                    <option value='1'>客户数量</option>
+                    <option value='2'>注册时间</option>
+                  </select>
+                </span>
+                <span class="right">
+                  <select @change="changePageSize" v-model="pageSize">
+                    <option value='10' disabled>显示条数</option>
+                    <option value='10'>10条</option>
+                    <option value='20'>20条</option>
+                  </select>
+                </span>
             </div>
             <div class="m-t-content">
                 <table>
@@ -40,8 +52,8 @@
                         <td>--</td>
                         <td>{{item.mobile}}</td>
                         <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
+                        <td>{{item.updateTime}}</td>
+                        <td>{{item.customerNum}}</td>
                         <td>
                             <router-link class="view-btn" :to='{path: "/AgentDetail", query: { type: 2, agentId: item.agentId}}'>查看</router-link>
                             <router-link class="edit-btn" :to='{path: "/AgentDetail", query: { type: 3, agentId: item.agentId}}'>修改</router-link>
@@ -64,6 +76,7 @@ export default {
       name: '',
       pageNo: 1,
       pageSize: 10,
+      sortType: 0, // 排序方式
       totalPages: 1,
       resultList: []
     }
@@ -98,6 +111,21 @@ export default {
     },
     getPage (e) {
       this.pageNo = e
+      this.getData()
+    },
+    changePageSize () {
+      this.getData()
+    },
+    changeSort () {
+      this.getData()
+    },
+    reloadAgent () {
+      this.pageNo = 1
+      this.pageSize = 10
+      this.sortType = 0
+      this.mobile = ''
+      this.name = ''
+      this.mobile = ''
       this.getData()
     }
   }
