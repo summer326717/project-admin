@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>财务管理 > 提现申请</span><button class="btn-normal" @click="reloadAgent()">刷新</button></p>
+            <p><span>财务管理 > 提现审核</span><button class="btn-normal" @click="reloadAgent()">刷新</button></p>
         </div>
         <div class="m-limit">
             <div class="m-title">
@@ -41,9 +41,9 @@
                         <td>{{item.userId}}</td>
                         <td>--</td>
                         <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
-                        <td>--</td>
+                        <td>{{(item.amount/100).toFixed(2)}}</td>
+                        <td>{{item.createTime}}</td>
+                        <td>支付宝：{{item.sureAlipay}}</td>
                         <td>
                           <button class="btn-normal" @click='passMethod(item.userWithdrawId)'>通过</button>
                           <button class="btn-normal" @click='passMethod(item.userWithdrawId)'>拒绝</button>

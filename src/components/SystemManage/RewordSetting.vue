@@ -1,19 +1,19 @@
 <template>
-    <div>
-        <div>
-            <span>*每日金币上限</span>
-            <input type="text">
+    <div class="manage-detail">
+        <div class="item">
+            <span class="left-span">*每日金币上限</span>
+            <input class="ipt-normal" type="text">
         </div>
-        <div>
-            <span>*获取金币时间间隔</span>
-            <input type="text">
+        <div class="item">
+            <span class="left-span">*获取金币时间间隔</span>
+            <input class="ipt-normal" type="text">
         </div>
-        <div>
-            <span>*金币奖励范围</span>
+        <div class="item">
+            <span class="left-span">*金币奖励范围</span>
             <input type="text">
             <span>-</span>
             <input type="text">
         </div>
-        <div><button>保存</button></div>
+        <div><button class="save-btn">保存</button></div>
     </div>
 </template>

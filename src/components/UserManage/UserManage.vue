@@ -21,8 +21,20 @@
         <div class="m-table">
             <div class="m-title">
                 <span>数据列表</span>
-                <span class="right">显示条数</span>
-                <span class="right">排序方式</span>
+                <span class="right">
+                  <select @change="changeSort" v-model="sortType">
+                    <option value='2' disabled>排序方式</option>
+                    <option value='1'>正序</option>
+                    <option value='2'>倒叙</option>
+                  </select>
+                </span>
+                <span class="right">
+                  <select @change="changePageSize" v-model="pageSize">
+                    <option value='10' disabled>显示条数</option>
+                    <option value='10'>10条</option>
+                    <option value='20'>20条</option>
+                  </select>
+                </span>
             </div>
             <div class="m-t-content">
                 <table>
@@ -111,6 +123,12 @@ export default {
       this.nickName = ''
       this.agentId = ''
       this.sortType = 2
+    },
+    changeSort () {
+      this.getData()
+    },
+    changePageSize () {
+      this.getData()
     }
   }
 }

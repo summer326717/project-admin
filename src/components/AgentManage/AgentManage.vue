@@ -21,9 +21,9 @@
                 <span>数据列表</span>
                 <span class="right">
                   <select @change="changeSort" v-model="sortType">
-                    <option value='0' disabled>排序方式</option>
-                    <option value='1'>客户数量</option>
-                    <option value='2'>注册时间</option>
+                    <option value='2' disabled>排序方式</option>
+                    <option value='1'>正序</option>
+                    <option value='2'>倒叙</option>
                   </select>
                 </span>
                 <span class="right">
@@ -76,7 +76,7 @@ export default {
       name: '',
       pageNo: 1,
       pageSize: 10,
-      sortType: 0, // 排序方式
+      sortType: 2, // 排序方式
       totalPages: 1,
       resultList: []
     }
@@ -94,7 +94,8 @@ export default {
         pageSize: this.pageSize,
         agentId: this.agentId,
         mobile: this.mobile,
-        name: this.name
+        name: this.name,
+        sortType: this.sortType
       }
       this.$axiosPost('/back/queryAgentInfoList', json).then((res) => {
         if (res.code === 0) {

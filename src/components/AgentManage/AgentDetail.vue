@@ -35,7 +35,7 @@
                     <p><span @click="uploadImg">+</span><button>修改</button></p>
                 </div>
             </div>
-            <div><button @click="SaveAgent">保存</button></div>
+            <div><button class="save-btn" @click="SaveAgent">保存</button></div>
         </div>
         <div v-if='type==2'>
             <div class="item">
@@ -108,8 +108,20 @@ export default {
   },
   methods: {
     addAgent () {
+      if (this.account === '' || this.account === null || this.account === undefined) {
+        return
+      }
+      if (this.mobile === '' || this.mobile === null || this.mobile === undefined) {
+        return
+      }
+      if (this.name === '' || this.name === null || this.name === undefined) {
+        return
+      }
+      if (this.idNumber === '' || this.idNumber === null || this.idNumber === undefined) {
+        return
+      }
       let json = {
-        account: this.mobile,
+        account: this.account,
         name: this.name,
         mobile: this.mobile,
         sex: this.sex, // 0保密1男2女，默认保密
@@ -149,9 +161,21 @@ export default {
       })
     },
     EditUserInfo () {
+      if (this.account === '' || this.account === null || this.account === undefined) {
+        return
+      }
+      if (this.mobile === '' || this.mobile === null || this.mobile === undefined) {
+        return
+      }
+      if (this.name === '' || this.name === null || this.name === undefined) {
+        return
+      }
+      if (this.idNumber === '' || this.idNumber === null || this.idNumber === undefined) {
+        return
+      }
       let json = {
         agentId: this.agentId,
-        account: this.mobile,
+        account: this.account,
         name: this.name,
         mobile: this.mobile,
         sex: this.sex, // 0保密1男2女，默认保密

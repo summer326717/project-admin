@@ -150,4 +150,14 @@ input,button {
 .manage-detail .item {
     padding: 14px 0;
 }
+.save-btn {
+    border: none;
+    width: 220px;
+    height: 55px;
+    line-height: 55px;
+    text-align: center;
+    border-radius: 6px;
+    font-size: 16px;
+    background: #F1CE02;
+}
 </style>

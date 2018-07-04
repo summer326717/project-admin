@@ -36,14 +36,14 @@
                         <th>操作</th>
                     </tr>
                     <tr v-for="(item,i) in dataList" :key="i">
-                        <td>11111</td>
+                        <td></td>
+                        <td>{{i+(pageNo-1)*pageSize}}</td>
                         <td>{{item.userId}}</td>
-                        <td>11111</td>
-                        <td>11111</td>
-                        <td>11111</td>
-                        <td>11111</td>
-                        <td>11111</td>
-                        <td>11111</td>
+                        <td>--</td>
+                        <td>--</td>
+                        <td>{{(item.amount/100).toFixed(2)}}</td>
+                        <td>{{item.createTime}}</td>
+                        <td>支付宝：{{item.sureAlipay}}</td>
                         <td><button class="btn-normal" @click="finishMethod(item.userWithdrawId)">完成</button></td>
                     </tr>
                 </table>

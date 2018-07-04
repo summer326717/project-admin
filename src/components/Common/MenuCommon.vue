@@ -40,7 +40,7 @@ export default {
           menuName: '财务管理',
           menuItem: [
             {
-              menuName: '提现申请',
+              menuName: '提现审核',
               menuLink: '/MoneyCheck'
             },
             {

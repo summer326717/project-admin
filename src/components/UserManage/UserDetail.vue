@@ -39,7 +39,7 @@
                     <option>选择城市</option>
                 </select>
             </div>-->
-            <div><button @click="saveUser">保存</button></div>
+            <div><button class="save-btn" @click="saveUser">保存</button></div>
         </div>
         <div v-if='type===2'>
             <div class="item">
@@ -86,6 +86,18 @@ export default {
   },
   methods: {
     addUser () {
+      if (this.account === '' || this.account === null || this.account === undefined) {
+        return
+      }
+      if (this.nickName === '' || this.nickName === null || this.nickName === undefined) {
+        return
+      }
+      if (this.mobile === '' || this.mobile === null || this.mobile === undefined) {
+        return
+      }
+      if (this.agentId === '' || this.agentId === null || this.agentId === undefined) {
+        return
+      }
       let json = {
         account: this.account,
         nickName: this.nickName,
@@ -119,6 +131,18 @@ export default {
       })
     },
     EditUserInfo () {
+      if (this.account === '' || this.account === null || this.account === undefined) {
+        return
+      }
+      if (this.nickName === '' || this.nickName === null || this.nickName === undefined) {
+        return
+      }
+      if (this.mobile === '' || this.mobile === null || this.mobile === undefined) {
+        return
+      }
+      if (this.agentId === '' || this.agentId === null || this.agentId === undefined) {
+        return
+      }
       let json = {
         account: this.account,
         nickName: this.nickName,
