@@ -39,8 +39,8 @@
                         <td></td>
                         <td>{{i+(pageNo-1)*pageSize}}</td>
                         <td>{{item.userId}}</td>
-                        <td>--</td>
-                        <td>--</td>
+                        <td>{{item.nickName}}{{item.sex}}</td>
+                        <td>{{item.mobile}}</td>
                         <td>{{(item.amount/100).toFixed(2)}}</td>
                         <td>{{item.createTime}}</td>
                         <td>支付宝：{{item.sureAlipay}}</td>
@@ -65,7 +65,8 @@ export default {
       alipay: '',
       pageNo: 1,
       pageSize: 10,
-      userId: ''
+      userId: '',
+      sortType: 2
     }
   },
   created () {
@@ -78,7 +79,8 @@ export default {
         pageNo: this.pageNo,
         pageSize: this.pageSize,
         state: 0, // 提现申请状态
-        userId: ''
+        userId: '',
+        sortType: this.sortType
       }
       this.$axiosPost('/back/queryWithdrawInfoList', json).then((res) => {
         if (res.code === 0) {
