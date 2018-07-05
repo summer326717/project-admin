@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>财务管理 > 提现操作</span><button class="btn-normal" @click="reloadAgent()">刷新</button></p>
+            <p><span>财务管理 > 提现操作</span><button class="btn-gray" @click="reloadAgent()">刷新</button></p>
         </div>
         <div class="m-limit">
             <div class="m-title">
@@ -44,27 +44,35 @@
                         <td>{{(item.amount/100).toFixed(2)}}</td>
                         <td>{{item.createTime}}</td>
                         <td>支付宝：{{item.sureAlipay}}</td>
-                        <td><button class="btn-normal" @click="finishMethod(item.userWithdrawId)">完成</button></td>
+                        <td><button class="btn-normal" @click="finishMethod(item.userWithdrawId, 2)">完成</button></td>
                     </tr>
                 </table>
+                <div class="no-data" v-if='resultList.length==0'>
+                    <img src="../../assets/no-data.png">
+                </div>
+                <pagenation v-if='resultList.length>0' :cur='pageNo' :all='totalPages' @getpage='getPage'></pagenation>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import pagenation from '../Common/Pagenation'
 export default {
   data () {
     return {
       nickName: '',
       mobile: '',
-      dataList: [],
+      resultList: [],
       alipay: '',
       pageNo: 1,
       pageSize: 10,
       userId: '',
       sortType: 2
     }
+  },
+  components: {
+    pagenation
   },
   created () {
     this.getData()
@@ -76,29 +84,33 @@ export default {
         pageNo: this.pageNo,
         pageSize: this.pageSize,
         userId: '',
-        state: 0, // 已处理
+        state: 1, // 打款中
         sortType: this.sortType
       }
       this.$axiosPost('/back/queryWithdrawInfoList', json).then((res) => {
         if (res.code === 0) {
-          this.dataList = res.data.resultList
+          this.resultList = res.data.resultList
         } else {
-          this.dataList = []
+          this.resultList = []
         }
       })
     },
-    finishMethod (userWithdrawId) {
+    finishMethod (userWithdrawId, state) {
       let json = {
-        rejectReason: '',
         userWithdrawId: userWithdrawId
       }
       this.$axiosPost('/back/handleWithdrawInfo', json).then((res) => {
         if (res.code === 0) {
           alert(res.message)
+          this.getData()
         } else {
           alert(res.message)
         }
       })
+    },
+    getPage (e) {
+      this.pageNo = e
+      this.getData()
     }
   }
 }

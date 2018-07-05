@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>财务管理 > 平台账号</span><button class="btn-normal" @click="reloadAgent()">刷新</button></p>
+            <p><span>财务管理 > 平台账号</span><button class="btn-gray" @click="reloadAgent()">刷新</button></p>
         </div>
         <div class="m-limit">
             <div class="m-title">
@@ -32,33 +32,47 @@
                         <th>申请时间</th>
                         <th>备注</th>
                     </tr>
-                    <tr>
+                    <tr v-for="(item,i) in resultList" :key="i">
                         <td>11111</td>
-                        <td>11111</td>
-                        <td>11111</td>
-                        <td>11111</td>
-                        <td>11111</td>
-                        <td>11111</td>
-                        <td>11111</td>
+                        <td>{{item.userId}}</td>
+                        <td>{{item.nickName}}{{item.sex}}</td>
+                        <td>{{item.mobile}}</td>
+                        <td>{{(item.amount/100).toFixed(2)}}</td>
+                        <td>{{item.createTime}}</td>
+                        <td>
+                            <p>{{item.sloveTime}}</p>
+                            <p>{{item.rejectReason}}</p>
+                        </td>
                     </tr>
                 </table>
+                <div class="no-data" v-if='resultList.length==0'>
+                    <img src="../../assets/no-data.png">
+                </div>
+                <pagenation v-if='resultList.length>0' :cur='pageNo' :all='totalPages' @getpage='getPage'></pagenation>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import pagenation from '../Common/Pagenation'
 export default {
   data () {
     return {
       nickName: '',
       mobile: '',
-      dataList: [],
+      resultList: [],
       alipay: '',
       pageNo: '',
       pageSize: '',
       userId: ''
     }
+  },
+  components: {
+    pagenation
+  },
+  created () {
+    this.getData()
   },
   methods: {
     getData () {
@@ -66,11 +80,14 @@ export default {
         alipay: '',
         pageNo: '',
         pageSize: '',
-        userId: ''
+        userId: '',
+        sortType: 2,
+        state: '23'
       }
       this.$axiosPost('/back/queryWithdrawInfoList', json).then((res) => {
         if (res.code === 0) {
-          this.dataList = []
+          this.resultList = res.data.resultList
+          this.totalPages = res.data.pageTotal
         }
       })
     },
@@ -84,6 +101,10 @@ export default {
           alert(res.message)
         }
       })
+    },
+    getPage (e) {
+      this.pageNo = e
+      this.getData()
     }
   }
 }

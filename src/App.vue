@@ -41,7 +41,10 @@ input,button {
 .hide {
   display: none;
 }
-
+.no-data {
+    padding: 10% 0;
+    text-align: center;
+}
 .manage-content .m-header {
     padding: 22px 12px;
     background: #F1F1F1;
@@ -51,7 +54,7 @@ input,button {
     border-left: 6px solid #F1CE02;
     padding-left: 10px;
 }
-.manage-content .m-header .btn-normal {
+.manage-content .m-header .btn-gray {
     float: right;
     margin-top: -10px;
 }
@@ -72,8 +75,11 @@ input,button {
 .manage-content .m-title {
     height: 60px;
     line-height: 60px;
-    padding-left: 20px;
-    background: #F1F1F1;
+    padding-left: 40px;
+    background-color: #F1F1F1;
+    background-image: url('./assets/img-01.png');
+    background-repeat: no-repeat;
+    background-position: 20px 50%;
 }
 /* 下拉框 */
 .manage-content .right {
@@ -98,6 +104,13 @@ input,button {
     width:85px;
     height:40px;
     background:rgba(241,206,2,1);
+    border-radius:6px;
+    border: 1px solid #DCDCDC;
+}
+.manage-content .btn-gray {
+    width:85px;
+    height:40px;
+    background: #F7F7F7;
     border-radius:6px;
     border: 1px solid #DCDCDC;
 }

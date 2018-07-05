@@ -4,7 +4,7 @@
             <p class="menu-title">赏金猎人</p>
             <ul>
                 <li v-for="(item,i) in menuList" :key="i">
-                    <a @click="openMenu(i,item.menuItem.length,item.menuLink)">{{item.menuName}}<i class="i-arrow" :class="{'hide':item.menuItem.length===0}"></i></a>
+                    <a :class="{'router-link-active':'/'+onRoutes==item.menuLink}" @click="openMenu(i,item.menuItem.length,item.menuLink)">{{item.menuName}}<i class="i-arrow" :class="{'hide':item.menuItem.length===0}"></i></a>
                     <div class="second-menu">
                         <router-link v-for="(seconditem,index) in item.menuItem" :key="index" :to="seconditem.menuLink">{{seconditem.menuName}}</router-link>
                     </div>
@@ -144,8 +144,12 @@ export default {
     border-top: 1px solid #111519;
     transition: all 0.4s ease-in-out;
 }
+.container .left-menu .router-link-active {
+  color: #f2ce00;
+  box-shadow: 3px 0 0 #f2ce00 inset;
+}
 .container .left-menu ul li a:hover {
-    color: #f2ce00;
+    background: #373a3e;
     box-shadow: 3px 0 0 #f2ce00 inset;
 }
 .container .left-menu ul li .i-arrow {

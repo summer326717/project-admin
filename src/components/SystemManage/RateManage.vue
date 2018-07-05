@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>系统设置 > 汇率管理</span><button class="btn-normal" @click="reloadAgent()">刷新</button></p>
+            <p><span>系统设置 > 汇率管理</span><button class="btn-gray" @click="reloadAgent()">刷新</button></p>
         </div>
         <div class="m-limit">
             <div class="m-title">
@@ -29,7 +29,7 @@
                         <th>兑换的金额（元）</th>
                         <th>结算时间</th>
                     </tr>
-                    <tr>
+                    <tr v-for="(item,i) in resultList" :key="i">
                         <td>11111</td>
                         <td>11111</td>
                         <td>11111</td>
@@ -37,46 +37,45 @@
                         <td>11111</td>
                     </tr>
                 </table>
+                <div class="no-data" v-if='resultList.length==0'>
+                    <img src="../../assets/no-data.png">
+                </div>
+                <pagenation v-if='resultList.length>0' :cur='pageNo' :all='totalPages' @getpage='getPage'></pagenation>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import pagenation from '../Common/Pagenation'
 export default {
   data () {
     return {
-      dataList: [],
-      alipay: '',
-      pageNo: '',
-      pageSize: '',
-      userId: ''
+      resultList: [],
+      pageNo: '1',
+      pageSize: '10'
     }
+  },
+  components: {
+    pagenation
   },
   methods: {
     getData () {
       let json = {
-        alipay: '',
-        pageNo: '',
-        pageSize: '',
-        userId: ''
+        pageNo: this.pageNo,
+        pageSize: this.pageSize
       }
-      this.$axiosPost('/back/queryWithdrawInfoList', json).then((res) => {
+      this.$axiosPost('/back/demo', json).then((res) => {
         if (res.code === 0) {
-          this.dataList = []
+          this.resultList = res.data.resultList
+        } else {
+          this.resultList = []
         }
       })
     },
-    passCheck () {
-      let json = {
-        rejectReason: '',
-        userWithdrawId: ''
-      }
-      this.$axiosPost('/back/handleWithdrawInfo', json).then((res) => {
-        if (res.code === 0) {
-          alert(res.message)
-        }
-      })
+    getPage (e) {
+      this.pageNo = e
+      this.getData()
     }
   }
 }

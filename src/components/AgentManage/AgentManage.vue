@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>代理人管理</span><button class="btn-normal" @click="reloadAgent()">刷新</button></p>
+            <p><span>代理人管理</span><button class="btn-gray" @click="reloadAgent()">刷新</button></p>
         </div>
         <div class="m-limit">
             <div class="m-title">
@@ -60,7 +60,10 @@
                         </td>
                     </tr>
                 </table>
-                <pagenation v-if="totalPages>1" :cur='pageNo' :all='totalPages' @getpage='getPage'></pagenation>
+                <div class="no-data" v-if='resultList.length==0'>
+                    <img src="../../assets/no-data.png">
+                </div>
+                <pagenation v-if='resultList.length>0' :cur='pageNo' :all='totalPages' @getpage='getPage'></pagenation>
             </div>
         </div>
     </div>

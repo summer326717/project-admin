@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>用户管理</span><button class="btn-normal" @click="reloadUser()">刷新</button></p>
+            <p><span>用户管理</span><button class="btn-gray" @click="reloadUser()">刷新</button></p>
         </div>
         <div class="m-limit">
             <div class="m-title">
@@ -64,7 +64,10 @@
                         </td>
                     </tr>
                 </table>
-                <pagenation :cur='pageNo' :all='totalPages'></pagenation>
+                <div class="no-data" v-if='resultList.length==0'>
+                    <img src="../../assets/no-data.png">
+                </div>
+                <pagenation v-if='resultList.length>0' :cur='pageNo' :all='totalPages' @getpage='getPage'></pagenation>
             </div>
         </div>
     </div>
@@ -128,6 +131,10 @@ export default {
       this.getData()
     },
     changePageSize () {
+      this.getData()
+    },
+    getPage (e) {
+      this.pageNo = e
       this.getData()
     }
   }

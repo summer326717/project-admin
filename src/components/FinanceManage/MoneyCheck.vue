@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>财务管理 > 提现审核</span><button class="btn-normal" @click="reloadAgent()">刷新</button></p>
+            <p><span>财务管理 > 提现审核</span><button class="btn-gray" @click="reloadAgent()">刷新</button></p>
         </div>
         <div class="m-limit">
             <div class="m-title">
@@ -35,7 +35,7 @@
                         <th>提现方式</th>
                         <th>操作</th>
                     </tr>
-                    <tr v-for="(item,i) in dataList" :key="i">
+                    <tr v-for="(item,i) in resultList" :key="i">
                         <td></td>
                         <td>{{i+(pageNo-1)*pageSize}}</td>
                         <td>{{item.userId}}</td>
@@ -45,29 +45,37 @@
                         <td>{{item.createTime}}</td>
                         <td>支付宝：{{item.sureAlipay}}</td>
                         <td>
-                          <button class="btn-normal" @click='passMethod(item.userWithdrawId)'>通过</button>
-                          <button class="btn-normal" @click='passMethod(item.userWithdrawId)'>拒绝</button>
+                          <button class="btn-normal" @click='passMethod(item.userWithdrawId, 1)'>通过</button>
+                          <button class="btn-normal" @click='passMethod(item.userWithdrawId, 3)'>拒绝</button>
                         </td>
                     </tr>
                 </table>
+                <div class="no-data" v-if='resultList.length==0'>
+                    <img src="../../assets/no-data.png">
+                </div>
+                <pagenation v-if='resultList.length>0' :cur='pageNo' :all='totalPages' @getpage='getPage'></pagenation>
             </div>
         </div>
     </div>
 </template>
 
 <script>
+import pagenation from '../Common/Pagenation'
 export default {
   data () {
     return {
       nickName: '',
       mobile: '',
-      dataList: [],
+      resultList: [],
       alipay: '',
       pageNo: 1,
       pageSize: 10,
       userId: '',
       sortType: 2
     }
+  },
+  components: {
+    pagenation
   },
   created () {
     this.getData()
@@ -78,30 +86,36 @@ export default {
         alipay: '', // 支付宝账号
         pageNo: this.pageNo,
         pageSize: this.pageSize,
-        state: 0, // 提现申请状态
+        state: 0, // 审核中
         userId: '',
         sortType: this.sortType
       }
       this.$axiosPost('/back/queryWithdrawInfoList', json).then((res) => {
         if (res.code === 0) {
-          this.dataList = res.data.resultList
+          this.resultList = res.data.resultList
         } else {
-          this.dataList = []
+          this.resultList = []
         }
       })
     },
-    passMethod (userWithdrawId) {
+    passMethod (userWithdrawId, state) {
       let json = {
         rejectReason: '666',
+        state: state, // 审核状态,1是审核通过，3是审核失败
         userWithdrawId: userWithdrawId
       }
       this.$axiosPost('/back/approveWithdrawInfo', json).then((res) => {
         if (res.code === 0) {
+          this.getData()
           alert(res.message)
         } else {
           alert(res.message)
         }
       })
+    },
+    getPage (e) {
+      this.pageNo = e
+      this.getData()
     }
   }
 }
