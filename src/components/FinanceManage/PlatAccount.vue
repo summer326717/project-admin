@@ -116,6 +116,9 @@ export default {
         if (res.code === 0) {
           this.resultList = res.data.resultList
           this.totalPages = res.data.pageTotal
+        } else {
+          this.resultList = []
+          this.totalPages = 1
         }
       })
     },
@@ -126,7 +129,13 @@ export default {
       }
       this.$axiosPost('/back/handleWithdrawInfo', json).then((res) => {
         if (res.code === 0) {
-          alert(res.message)
+          this.$message({
+            message: res.message,
+            type: 'success'
+          })
+          this.getData()
+        } else {
+          this.$message.error(res.message)
         }
       })
     },

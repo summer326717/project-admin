@@ -15,15 +15,21 @@
                 <span>手机号码：</span>
                 <input class="ipt-normal" type="text" v-model="mobile">
                 <span>代理人：</span>
-                <span class="drop-menu">
-                    <el-dropdown trigger="click" @command="changeAgent">
-                        <span class="el-dropdown-link">
-                            请选择代理人<i class="el-icon-arrow-down el-icon--right"></i>
-                        </span>
-                        <el-dropdown-menu slot="dropdown">
-                            <el-dropdown-item v-for="(item,i) in agentList" :key="i" :command="item.agentId">{{item.name}}</el-dropdown-item>
-                        </el-dropdown-menu>
-                    </el-dropdown>
+                <span>
+                    <el-autocomplete
+                        popper-class="my-autocomplete"
+                        v-model="agentName"
+                        :fetch-suggestions="querySearch"
+                        placeholder="请输入填写代理人"
+                        @select="changeAgent">
+                    <i
+                        class="el-icon-edit el-input__icon"
+                        slot="suffix">
+                    </i>
+                    <template slot-scope="{item}">
+                        <span class="addr">{{item.name}}{{item.value}}</span>
+                    </template>
+                    </el-autocomplete>
                 </span>
             </div>
         </div>
@@ -95,6 +101,7 @@ import pagenation from '../Common/Pagenation'
 export default {
   data () {
     return {
+      agentName: '',
       agentId: '',
       mobile: '',
       nickName: '',
@@ -115,6 +122,17 @@ export default {
     this.getData()
   },
   methods: {
+    createFilter (queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
+    },
+    querySearch (queryString, cb) {
+      var restaurants = this.agentList
+      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
+      // 调用 callback 返回建议列表的数据
+      cb(results)
+    },
     getData () {
       let json = {
         pageNo: this.pageNo,
@@ -145,6 +163,7 @@ export default {
       this.nickName = ''
       this.agentId = ''
       this.sortType = 2
+      this.agentName = ''
       this.getData()
     },
     changeSort (e) {
@@ -160,7 +179,7 @@ export default {
       this.getData()
     },
     changeAgent (e) {
-      this.agentId = e
+      this.agentId = e.name
       this.getData()
     },
     changeState (e, item) {
@@ -170,10 +189,13 @@ export default {
       }
       this.$axiosPost('/back/updateUserInfo', json).then((res) => {
         if (res.code === 0) {
-          alert(res.message)
+          this.$message({
+            message: res.message,
+            type: 'success'
+          })
           this.getData()
         } else {
-          alert(res.message)
+          this.$message.error(res.message)
         }
       })
     }

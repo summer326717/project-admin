@@ -11,8 +11,12 @@ axios.defaults.baseURL = '/advertisement/api/1'
 axios.interceptors.request.use(
   config => {
     let token = localStorage.getItem('token') // 注意使用的时候需要引入cookie方法，推荐js-cookie
+    let stoken = sessionStorage.getItem('token')
     if (!token) {
       token = ''
+    }
+    if (stoken) {
+      token = stoken
     }
     let Timestamp = Date.parse(new Date())
     let SignInfo = hexMd5(Timestamp + 'IronMan')
@@ -35,19 +39,19 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   response => {
     if (response.data.errCode === 2) {
-      alert('错误')
+      this.$message.error('错误')
     }
     if (response.status === 404) {
-      alert('服务出错，请稍后再试')
+      this.$message.error('服务出错，请稍后再试')
     }
     if (response.status === 304) {
-      alert('系统故障，请反馈给客服')
+      this.$message.error('系统故障，请反馈给客服')
     }
     if (response.status === 400) {
-      alert('服务不稳定，请稍后再试')
+      this.$message.error('服务不稳定，请稍后再试')
     }
     if (response.status === 500) {
-      alert('接口超时，请稍后再试')
+      this.$message.error('接口超时，请稍后再试')
     }
     return response
   },
@@ -72,10 +76,13 @@ export function axiosPost (url, data) {
   return new Promise((resolve, reject) => {
     axios.post(url, data).then(response => {
       if (response.data.code === 9999) {
-        alert(response.data.msg)
+        this.$message.error(response.data.msg)
       }
       if (response.data.code === -10000000) {
-        alert(response.data.msg)
+        this.$message.error(response.data.msg)
+      }
+      if (response.data.code === 100) {
+        this.$router.push({path: 'Login'})
       }
       console.log(response.data)
       resolve(response.data)
@@ -83,7 +90,7 @@ export function axiosPost (url, data) {
       console.log(err)
       console.log(err.message)
       // reject(err)
-      alert('接口出错，请稍后再试')
+      this.$message.error('接口出错，请稍后再试')
     })
   })
 }

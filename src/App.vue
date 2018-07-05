@@ -193,6 +193,9 @@ input,button {
     border-radius: 6px;
     margin-right: 50px;
 }
+.manage-content .ipt-normal:focus {
+    border: 1px solid #FFCD69
+}
 /* 按钮 */
 .manage-content .btn-normal {
     width:85px;
@@ -247,6 +250,9 @@ input,button {
     padding-left: 10px;
     border-radius: 6px;
     border: 1px solid #EBEBEB;
+}
+.manage-detail .ipt-normal:focus {
+    border: 1px solid #FFCD69
 }
 .manage-detail .left-span {
     width: 40%;

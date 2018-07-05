@@ -155,10 +155,13 @@ export default {
       }
       this.$axiosPost('/back/approveWithdrawInfo', json).then((res) => {
         if (res.code === 0) {
+          this.$message({
+            message: res.message,
+            type: 'success'
+          })
           this.getData()
-          alert(res.message)
         } else {
-          alert(res.message)
+          this.$message.error(res.message)
         }
       })
     },

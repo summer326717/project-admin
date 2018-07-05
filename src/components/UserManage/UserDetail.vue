@@ -9,15 +9,15 @@
             </div>
             <div class="detail-content" v-if='type===1||type==3'>
                 <div class="item">
-                    <span class="left-span">账户</span>
+                    <span class="left-span">*账户</span>
                     <input class="ipt-normal" type="text" v-model="account" placeholder="请输入姓名">
                 </div>
                 <div class="item">
-                    <span class="left-span">姓名</span>
+                    <span class="left-span">*姓名</span>
                     <input class="ipt-normal" type="text" v-model="nickName" placeholder="请输入姓名">
                 </div>
                 <div class="item">
-                    <span class="left-span">手机号码</span>
+                    <span class="left-span">*手机号码</span>
                     <input class="ipt-normal" type="text" v-model="mobile" placeholder="请输入手机号码">
                 </div>
                 <div class="item">
@@ -26,16 +26,22 @@
                     <el-radio v-model="sex" label="2">女</el-radio>
                 </div>
                 <div class="item">
-                    <span class="left-span">代理人</span>
-                    <span class="drop-menu">
-                        <el-dropdown trigger="click" @command="changeAgent">
-                            <span class="el-dropdown-link">
-                                请选择代理人<i class="el-icon-arrow-down el-icon--right"></i>
-                            </span>
-                            <el-dropdown-menu slot="dropdown">
-                                <el-dropdown-item v-for="(item,i) in agentList" :key="i" :command="item.agentId">{{item.name}}</el-dropdown-item>
-                            </el-dropdown-menu>
-                        </el-dropdown>
+                    <span class="left-span">*代理人</span>
+                    <span>
+                        <el-autocomplete
+                            popper-class="my-autocomplete"
+                            v-model="agentName"
+                            :fetch-suggestions="querySearch"
+                            placeholder="请输入填写代理人"
+                            @select="changeAgent">
+                        <i
+                            class="el-icon-edit el-input__icon"
+                            slot="suffix">
+                        </i>
+                        <template slot-scope="{item}">
+                            <span class="addr">{{item.name}}{{item.value}}</span>
+                        </template>
+                        </el-autocomplete>
                     </span>
                 </div>
                 <div class="item">
@@ -113,6 +119,7 @@ let utils = require('../../utils/common')
 export default {
   data () {
     return {
+      agentName: '',
       userObj: '',
       account: '',
       nickName: '',
@@ -133,31 +140,53 @@ export default {
     }
   },
   methods: {
+    createFilter (queryString) {
+      return (restaurant) => {
+        return (restaurant.value.toLowerCase().indexOf(queryString.toLowerCase()) === 0)
+      }
+    },
+    querySearch (queryString, cb) {
+      var restaurants = this.agentList
+      var results = queryString ? restaurants.filter(this.createFilter(queryString)) : restaurants
+      // 调用 callback 返回建议列表的数据
+      cb(results)
+    },
     back () {
       this.$router.back(-1)
     },
     checkUser () {
       if (!utils.checkNull(this.account)) {
-        alert('账号不能为空')
+        this.$message('账号不能为空')
         return false
       }
       if (!utils.checkNull(this.nickName)) {
-        alert('姓名不能为空')
+        this.$message('姓名不能为空')
+        return false
+      }
+      if (this.nickName.length >= 2) {
+        this.$message('姓名不能小于两个字')
+        return false
+      }
+      if (this.nickName.length <= 50) {
+        this.$message('姓名不能大于50个字')
         return false
       }
       if (!utils.checkNull(this.mobile)) {
-        alert('手机号码不能为空')
+        this.$message('手机号码不能为空')
+        return false
+      }
+      if (!/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(this.mobile)) {
+        this.$message('请输入正确手机号')
         return false
       }
       if (!utils.checkNull(this.agentId)) {
-        alert('请选择代理人')
+        this.$message('请选择代理人')
         return false
       }
       return true
     },
     addUser () {
       if (!this.checkUser()) {
-        alert('请填写完整信息')
         return
       }
       let json = {
@@ -169,9 +198,12 @@ export default {
       }
       this.$axiosPost('/back/saveUserInfo', json).then((res) => {
         if (res.code === 0) {
-          alert('添加成功')
+          this.$message({
+            message: res.message,
+            type: 'success'
+          })
         } else {
-          alert(res.message)
+          this.$message.error(res.message)
         }
       })
     },
@@ -192,13 +224,13 @@ export default {
           this.totalEarnMoney = res.data.totalEarnMoney
           this.balance = res.data.balance
         } else {
-          alert(res.message)
+          this.$message.error(res.message)
         }
       })
     },
     EditUserInfo () {
       if (!this.checkUser()) {
-        alert('请填写完整信息')
+        this.$message('请填写完整信息')
         return
       }
       let json = {
@@ -211,9 +243,12 @@ export default {
       }
       this.$axiosPost('/back/updateUserInfo', json).then((res) => {
         if (res.code === 0) {
-          alert(res.message)
+          this.$message({
+            message: res.message,
+            type: 'success'
+          })
         } else {
-          alert(res.message)
+          this.$message.error(res.message)
         }
       })
     },
@@ -226,7 +261,7 @@ export default {
       }
     },
     changeAgent (e) {
-      this.agentId = e
+      this.agentId = e.name
     }
   }
 }

@@ -129,10 +129,13 @@ export default {
       }
       this.$axiosPost('/back/handleWithdrawInfo', json).then((res) => {
         if (res.code === 0) {
-          alert(res.message)
           this.getData()
+          this.$message({
+            message: res.message,
+            type: 'success'
+          })
         } else {
-          alert(res.message)
+          this.$message.error(res.message)
         }
       })
     },

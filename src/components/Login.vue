@@ -8,10 +8,10 @@
           <input class="ipt" type="text" v-model="account" placeholder="请输入手机号">
         </div>
         <div>
-          <input class="ipt" type="text" v-model="password" placeholder="请输入登录密码">
+          <input class="ipt" type="password" v-model="password" placeholder="请输入登录密码">
         </div>
         <div class="check-btn">
-          <input type="checkbox"><span>记住密码</span><router-link class="f-right" to='/ForgetPwd'>忘记密码</router-link>
+          <el-checkbox v-model="checked">记住密码</el-checkbox><router-link class="f-right" to='/ForgetPwd'>忘记密码</router-link>
         </div>
         <div><button class="login-btn" @click="LoginMethod">登陆</button></div>
       </div>
@@ -24,6 +24,7 @@ export default {
   name: 'Login',
   data () {
     return {
+      checked: false,
       account: 'cupid',
       password: '123456'
     }
@@ -45,9 +46,13 @@ export default {
       this.$axiosPost('/adminLogin', json).then((res) => {
         if (res.code === 0) {
           this.$router.push({path: '/AgentManage'})
-          localStorage.setItem('token', res.data.token)
-          localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
-          console.log(res)
+          if (this.checked) {
+            localStorage.setItem('token', res.data.token)
+            localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
+          } else {
+            localStorage.setItem('token', res.data.token)
+            localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
+          }
         } else {
           alert(res.message)
         }

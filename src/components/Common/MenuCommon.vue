@@ -10,6 +10,7 @@
                     </div>
                 </li>
             </ul>
+            <p class="sign-out" @click="signOut"><img src="../../assets/img-13.png"></p>
         </div>
         <div class="right-content">
             <router-view></router-view>
@@ -95,6 +96,11 @@ export default {
         console.log('没有二级菜单')
         this.$router.push({'path': menuLink})
       }
+    },
+    signOut () {
+      localStorage.removeItem('token')
+      sessionStorage.removeItem('token')
+      this.$router.push({path: '/'})
     }
   },
   computed: {
@@ -168,6 +174,13 @@ export default {
 }
 .container .left-menu .second-menu a{
     padding-left: 40px;
+}
+.container .left-menu .sign-out {
+  position: absolute;
+  left: 0;
+  bottom: 20px;
+  width: 100%;
+  text-align: center;
 }
 .container .right-content {
     padding-left: 180px;

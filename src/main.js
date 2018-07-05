@@ -8,6 +8,8 @@ import { axiosGet, axiosPost } from './assets/serviceApi'
 import { getAgentList } from './utils/common'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
+import NProgress from 'nprogress'
+import 'nprogress/nprogress.css'
 
 Vue.prototype.$axiosGet = axiosGet
 Vue.prototype.$axiosPost = axiosPost
@@ -18,10 +20,24 @@ router.afterEach((to, from, next) => {
   if (to.path !== '/Login') {
     if (!sessionStorage.getItem('agentList')) {
       getAgentList().then((res) => {
-        sessionStorage.setItem('agentList', JSON.stringify(res.data.resultList))
+        let dataList = []
+        res.data.resultList.map((v, i) => {
+          dataList.push({value: v.name, name: v.agentId})
+        })
+        sessionStorage.setItem('agentList', JSON.stringify(dataList))
       })
     }
   }
+})
+NProgress.configure({ showSpinner: true })
+
+router.beforeEach((to, from, next) => {
+  NProgress.start()
+  next()
+})
+
+router.afterEach(transition => {
+  NProgress.done()
 })
 Vue.use(ElementUI)
 /* eslint-disable no-new */

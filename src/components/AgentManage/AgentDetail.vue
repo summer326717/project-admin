@@ -56,7 +56,7 @@
                 </div>
                 <div class="item">
                     <span class="left-span">姓名</span>
-                    <span>{{userDetail.name}}</span>
+                    <span>{{userDetail.name}}<i v-if='userDetail.sex==2' class="female"></i><i v-if='userDetail.sex==1' class="female"></i></span>
                 </div>
                 <div class="item">
                     <span class="left-span">手机号码</span>
@@ -122,26 +122,41 @@ export default {
     },
     checkAgent () {
       if (!utils.checkNull(this.account)) {
-        alert('账号不能为空')
+        this.$message('账号不能为空')
         return false
       }
       if (!utils.checkNull(this.name)) {
-        alert('姓名不能为空')
+        this.$message('姓名不能为空')
+        return false
+      }
+      if (this.name.length >= 2) {
+        this.$message('姓名不能小于两个字')
+        return false
+      }
+      if (this.name.length <= 50) {
+        this.$message('姓名不能大于50个字')
         return false
       }
       if (!utils.checkNull(this.mobile)) {
-        alert('手机号码不能为空')
+        this.$message('手机号码不能为空')
+        return false
+      }
+      if (!/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(this.mobile)) {
+        this.$message('请输入正确手机号')
         return false
       }
       if (!utils.checkNull(this.idNumber)) {
-        alert('身份证号不能为空')
+        this.$message('身份证号不能为空')
+        return false
+      }
+      if (!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(this.idNumber)) {
+        this.$message('请输入正确的身份证号码')
         return false
       }
       return true
     },
     addAgent () {
       if (!this.checkAgent()) {
-        alert('请填写完整信息')
         return
       }
       let json = {
@@ -153,9 +168,12 @@ export default {
       }
       this.$axiosPost('/back/saveAgentInfo', json).then((res) => {
         if (res.code === 0) {
-          alert('添加成功')
+          this.$message({
+            message: res.message,
+            type: 'success'
+          })
         } else {
-          alert(res.message)
+          this.$message.error(res.message)
         }
       })
     },
@@ -180,13 +198,13 @@ export default {
           this.idNumber = res.data.idNumber
           this.name = res.data.name
         } else {
-          alert(res.message)
+          this.$message(res.message)
         }
       })
     },
     EditUserInfo () {
       if (!this.checkAgent()) {
-        alert('请填写完整信息')
+        this.$message('请填写完整信息')
         return
       }
       let json = {
@@ -199,9 +217,12 @@ export default {
       }
       this.$axiosPost('/back/updateAgentInfo', json).then((res) => {
         if (res.code) {
-          alert(res.message)
+          this.$message({
+            message: res.message,
+            type: 'success'
+          })
         } else {
-          alert(res.message)
+          this.$message.error(res.message)
         }
       })
     },
