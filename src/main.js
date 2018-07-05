@@ -5,12 +5,25 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import { axiosGet, axiosPost } from './assets/serviceApi'
+import { getAgentList } from './utils/common'
+import ElementUI from 'element-ui'
+import 'element-ui/lib/theme-chalk/index.css'
 
 Vue.prototype.$axiosGet = axiosGet
 Vue.prototype.$axiosPost = axiosPost
 Vue.prototype.$axios = axios
 Vue.config.productionTip = false
-
+// 路由结束后，如果不是登录页面就请求获取代理人列表，并本地储存，如果已存在就不用再次请求
+router.afterEach((to, from, next) => {
+  if (to.path !== '/Login') {
+    if (!sessionStorage.getItem('agentList')) {
+      getAgentList().then((res) => {
+        sessionStorage.setItem('agentList', JSON.stringify(res.data.resultList))
+      })
+    }
+  }
+})
+Vue.use(ElementUI)
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

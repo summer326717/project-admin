@@ -4,7 +4,7 @@
             <p class="menu-title">赏金猎人</p>
             <ul>
                 <li v-for="(item,i) in menuList" :key="i">
-                    <a :class="{'router-link-active':'/'+onRoutes==item.menuLink}" @click="openMenu(i,item.menuItem.length,item.menuLink)">{{item.menuName}}<i class="i-arrow" :class="{'hide':item.menuItem.length===0}"></i></a>
+                    <a :class="{'active':'/'+onRoutes==item.menuLink}" @click="openMenu(i,item.menuItem.length,item.menuLink)">{{item.menuName}}<i class="i-arrow" :class="{'hide':item.menuItem.length===0}"></i></a>
                     <div class="second-menu">
                         <router-link v-for="(seconditem,index) in item.menuItem" :key="index" :to="seconditem.menuLink">{{seconditem.menuName}}</router-link>
                     </div>
@@ -52,8 +52,8 @@ export default {
               menuLink: '/PlatAccount'
             }
           ]
-        },
-        {
+        }
+        /* {
           menuName: '系统设置',
           menuItem: [
             {
@@ -65,7 +65,7 @@ export default {
               menuLink: '/RewordSetting'
             }
           ]
-        }
+        } */
       ]
     }
   },

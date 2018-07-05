@@ -19,19 +19,27 @@
         <div class="m-table">
             <div class="m-title">
                 <span>数据列表</span>
-                <span class="right">
-                  <select @change="changeSort" v-model="sortType">
-                    <option value='2' disabled>排序方式</option>
-                    <option value='1'>正序</option>
-                    <option value='2'>倒叙</option>
-                  </select>
+                <span class="drop-menu right">
+                    <el-dropdown trigger="click" @command="changeSort">
+                        <span class="el-dropdown-link">
+                            排序方式<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="1">正序</el-dropdown-item>
+                            <el-dropdown-item command="2">倒叙</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
                 </span>
-                <span class="right">
-                  <select @change="changePageSize" v-model="pageSize">
-                    <option value='10' disabled>显示条数</option>
-                    <option value='10'>10条</option>
-                    <option value='20'>20条</option>
-                  </select>
+                <span class="drop-menu right">
+                    <el-dropdown trigger="click" @command="changePageSize">
+                        <span class="el-dropdown-link">
+                            显示条数<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="10">10条</el-dropdown-item>
+                            <el-dropdown-item command="20">20条</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
                 </span>
             </div>
             <div class="m-t-content">
@@ -48,7 +56,7 @@
                     </tr>
                     <tr v-for="(item,i) in resultList" :key="i">
                         <td>{{item.agentId}}</td>
-                        <td>{{item.name}}<i>女</i></td>
+                        <td>{{item.name}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="female"></i></td>
                         <td>--</td>
                         <td>{{item.mobile}}</td>
                         <td>--</td>
@@ -98,6 +106,7 @@ export default {
         agentId: this.agentId,
         mobile: this.mobile,
         name: this.name,
+        allData: 'N',
         sortType: this.sortType
       }
       this.$axiosPost('/back/queryAgentInfoList', json).then((res) => {
@@ -117,10 +126,12 @@ export default {
       this.pageNo = e
       this.getData()
     },
-    changePageSize () {
+    changePageSize (e) {
+      this.pageSize = e
       this.getData()
     },
-    changeSort () {
+    changeSort (e) {
+      this.sortType = e
       this.getData()
     },
     reloadAgent () {

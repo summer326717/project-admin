@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>财务管理 > 提现审核</span><button class="btn-gray" @click="reloadAgent()">刷新</button></p>
+            <p><span>财务管理 > 提现审核</span><button class="btn-gray" @click="reload()">刷新</button></p>
         </div>
         <div class="m-limit">
             <div class="m-title">
@@ -18,9 +18,29 @@
         <div class="m-table">
             <div class="m-title">
                 <span>数据列表</span>
-                <button class="btn-normal">批量通过</button>
-                <span class="right">显示条数</span>
-                <span class="right">排序方式</span>
+                <!--<button class="btn-normal">批量通过</button>-->
+                <span class="drop-menu right">
+                    <el-dropdown trigger="click" @command="changeSort">
+                        <span class="el-dropdown-link">
+                            排序方式<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="1">正序</el-dropdown-item>
+                            <el-dropdown-item command="2">倒叙</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </span>
+                <span class="drop-menu right">
+                    <el-dropdown trigger="click" @command="changePageSize">
+                        <span class="el-dropdown-link">
+                            显示条数<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="10">10条</el-dropdown-item>
+                            <el-dropdown-item command="20">20条</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </span>
             </div>
             <div class="m-t-content">
                 <table>
@@ -39,7 +59,7 @@
                         <td></td>
                         <td>{{i+(pageNo-1)*pageSize}}</td>
                         <td>{{item.userId}}</td>
-                        <td>{{item.nickName}}{{item.sex}}</td>
+                        <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="female"></i></td>
                         <td>{{item.mobile}}</td>
                         <td>{{(item.amount/100).toFixed(2)}}</td>
                         <td>{{item.createTime}}</td>
@@ -71,7 +91,8 @@ export default {
       pageNo: 1,
       pageSize: 10,
       userId: '',
-      sortType: 2
+      sortType: 2,
+      totalPages: 1
     }
   },
   components: {
@@ -81,6 +102,14 @@ export default {
     this.getData()
   },
   methods: {
+    reload () {
+      this.nickName = ''
+      this.mobile = ''
+      this.pageNo = 1
+      this.pageSize = 10
+      this.sortType = 2
+      this.getData()
+    },
     getData () {
       let json = {
         alipay: '', // 支付宝账号
@@ -93,14 +122,34 @@ export default {
       this.$axiosPost('/back/queryWithdrawInfoList', json).then((res) => {
         if (res.code === 0) {
           this.resultList = res.data.resultList
+          this.totalPages = res.data.pageTotal
         } else {
           this.resultList = []
         }
       })
     },
     passMethod (userWithdrawId, state) {
+      if (state === 1) {
+        this.$confirm('是否通过该提现申请?', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          type: 'warning'
+        }).then(() => {
+          this.passCheck('', state, userWithdrawId)
+        })
+      } else {
+        this.$prompt('拒绝原因', '提示', {
+          confirmButtonText: '确定',
+          cancelButtonText: '取消',
+          inputErrorMessage: '邮箱格式不正确'
+        }).then(({ value }) => {
+          this.passCheck(value, state, userWithdrawId)
+        })
+      }
+    },
+    passCheck (value, state, userWithdrawId) {
       let json = {
-        rejectReason: '666',
+        rejectReason: value,
         state: state, // 审核状态,1是审核通过，3是审核失败
         userWithdrawId: userWithdrawId
       }
@@ -115,6 +164,14 @@ export default {
     },
     getPage (e) {
       this.pageNo = e
+      this.getData()
+    },
+    changeSort (e) {
+      this.sortType = e
+      this.getData()
+    },
+    changePageSize (e) {
+      this.pageSize = e
       this.getData()
     }
   }

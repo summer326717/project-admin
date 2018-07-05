@@ -17,8 +17,28 @@
         <div class="m-table">
             <div class="m-title">
                 <span>数据列表</span>
-                <span class="right">显示条数</span>
-                <span class="right">排序方式</span>
+                <span class="drop-menu right">
+                    <el-dropdown trigger="click" @command="changeSort">
+                        <span class="el-dropdown-link">
+                            排序方式<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="1">正序</el-dropdown-item>
+                            <el-dropdown-item command="2">倒叙</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </span>
+                <span class="drop-menu right">
+                    <el-dropdown trigger="click" @command="changePageSize">
+                        <span class="el-dropdown-link">
+                            显示条数<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="10">10条</el-dropdown-item>
+                            <el-dropdown-item command="20">20条</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </span>
             </div>
             <div class="m-t-content">
                 <table>
@@ -53,8 +73,12 @@ export default {
     return {
       resultList: [],
       pageNo: '1',
-      pageSize: '10'
+      pageSize: '10',
+      totalPages: 1
     }
+  },
+  created () {
+    this.getData()
   },
   components: {
     pagenation
@@ -68,6 +92,7 @@ export default {
       this.$axiosPost('/back/demo', json).then((res) => {
         if (res.code === 0) {
           this.resultList = res.data.resultList
+          this.totalPages = res.data.pageTotal
         } else {
           this.resultList = []
         }

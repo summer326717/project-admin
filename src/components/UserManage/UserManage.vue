@@ -15,25 +15,42 @@
                 <span>手机号码：</span>
                 <input class="ipt-normal" type="text" v-model="mobile">
                 <span>代理人：</span>
-                <input class="ipt-normal" type="text">
+                <span class="drop-menu">
+                    <el-dropdown trigger="click" @command="changeAgent">
+                        <span class="el-dropdown-link">
+                            请选择代理人<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item v-for="(item,i) in agentList" :key="i" :command="item.agentId">{{item.name}}</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
+                </span>
             </div>
         </div>
         <div class="m-table">
             <div class="m-title">
                 <span>数据列表</span>
-                <span class="right">
-                  <select @change="changeSort" v-model="sortType">
-                    <option value='2' disabled>排序方式</option>
-                    <option value='1'>正序</option>
-                    <option value='2'>倒叙</option>
-                  </select>
+                <span class="right drop-menu">
+                    <el-dropdown trigger="click" @command="changeSort">
+                        <span class="el-dropdown-link">
+                            排序方式<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="1">正序</el-dropdown-item>
+                            <el-dropdown-item command="2">倒叙</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
                 </span>
-                <span class="right">
-                  <select @change="changePageSize" v-model="pageSize">
-                    <option value='10' disabled>显示条数</option>
-                    <option value='10'>10条</option>
-                    <option value='20'>20条</option>
-                  </select>
+                <span class="right drop-menu">
+                    <el-dropdown trigger="click" @command="changePageSize">
+                        <span class="el-dropdown-link">
+                            显示条数<i class="el-icon-arrow-down el-icon--right"></i>
+                        </span>
+                        <el-dropdown-menu slot="dropdown">
+                            <el-dropdown-item command="10">10条</el-dropdown-item>
+                            <el-dropdown-item command="20">20条</el-dropdown-item>
+                        </el-dropdown-menu>
+                    </el-dropdown>
                 </span>
             </div>
             <div class="m-t-content">
@@ -51,13 +68,13 @@
                     </tr>
                     <tr v-for="(item,i) in resultList" :key="i">
                         <td>{{item.userBaseId}}</td>
-                        <td>{{item.nickName}}<i>{{item.sex}}</i></td>
+                        <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="female"></i></td>
                         <td>--</td>
                         <td>{{item.mobile}}</td>
                         <td>{{item.balance}}</td>
                         <td>{{item.lastLoginTime}}</td>
                         <td>{{item.agentId}}</td>
-                        <td><button>{{item.state}}</button></td>
+                        <td><button @click="changeState(1,item)" v-if='item.state==0' class="switch-btn"></button><button @click="changeState(0,item)" v-if='item.state==1' class="switch-btn2"></button></td>
                         <td>
                             <router-link class="view-btn" :to='{path: "/UserDetail", query: { type: 2, userBaseId : item.userBaseId }}'>查看</router-link>
                             <router-link class="edit-btn" :to='{path: "/UserDetail", query: { type: 3, userBaseId : item.userBaseId }}'>修改</router-link>
@@ -85,6 +102,7 @@ export default {
       pageSize: 10,
       sortType: 2, // 1正序2倒叙，默认倒叙
       totalPages: 1,
+      agentList: [],
       resultList: []
     }
   },
@@ -92,6 +110,8 @@ export default {
     pagenation
   },
   created () {
+    let agentList = sessionStorage.getItem('agentList')
+    this.agentList = JSON.parse(agentList)
     this.getData()
   },
   methods: {
@@ -102,8 +122,7 @@ export default {
         agentId: this.agentId,
         mobile: this.mobile,
         nickName: this.nickName,
-        sortType: this.sortType,
-        resultList: this.resultList
+        sortType: this.sortType
       }
       this.$axiosPost('/back/queryUserInfoList', json).then((res) => {
         if (res.code === 0) {
@@ -126,16 +145,37 @@ export default {
       this.nickName = ''
       this.agentId = ''
       this.sortType = 2
-    },
-    changeSort () {
       this.getData()
     },
-    changePageSize () {
+    changeSort (e) {
+      this.sortType = e
+      this.getData()
+    },
+    changePageSize (e) {
+      this.pageSize = e
       this.getData()
     },
     getPage (e) {
       this.pageNo = e
       this.getData()
+    },
+    changeAgent (e) {
+      this.agentId = e
+      this.getData()
+    },
+    changeState (e, item) {
+      let json = {
+        userBaseId: item.userBaseId,
+        state: e
+      }
+      this.$axiosPost('/back/updateUserInfo', json).then((res) => {
+        if (res.code === 0) {
+          alert(res.message)
+          this.getData()
+        } else {
+          alert(res.message)
+        }
+      })
     }
   }
 }

@@ -30,7 +30,29 @@ input {
   padding: 0;
 }
 input,button {
-    outline: none
+    outline: none;
+    border: none;
+}
+.el-dropdown-menu {
+    max-height: 400px;
+    overflow-y: scroll;
+}
+/* 自定义滚动条 */
+::-webkit-scrollbar{
+  width:5px;
+  height:16px;
+  border-radius:5px;
+  background-color:#ffffff
+}
+/* 原始通道及滑条 */
+::-webkit-scrollbar-track{
+  border-radius:5px;
+  background-color:#ffffff
+}
+::-webkit-scrollbar-thumb{
+  border-radius:5px;
+  -webkit-box-shadow:inset 0 0 5px rgba(238,240,247,0);
+  background-color:#dcdee6
 }
 #app {
   font-family: 'Microsoft YaHei', Helvetica, Arial, sans-serif;
@@ -44,6 +66,64 @@ input,button {
 .no-data {
     padding: 10% 0;
     text-align: center;
+}
+.right {
+    float: right;
+}
+.female {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: bottom;
+    padding-left: 10px;
+    background: url('./assets/img-02.png') no-repeat 100% 50%;
+}
+.male {
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    vertical-align: bottom;
+    padding-left: 10px;
+    background: url('./assets/img-03.png') no-repeat 100% 50%;
+}
+.switch-btn {
+    width: 57px;
+    height: 26px;
+    border-radius: 26px;
+    position: relative;
+    border: 1px solid #2ADA4B;
+    background: #2ADA4B;
+    box-shadow: #BEBEBE 0 0 5px;
+}
+.switch-btn::after {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: -1px;
+    width: 24px;
+    height: 24px;
+    border:1px solid #BEBEBE;
+    background: #fff;
+    border-radius: 50%;
+}
+.switch-btn2 {
+    width: 57px;
+    height: 27px;
+    background: #BEBEBE;
+    border-radius: 27px;
+    position: relative;
+    box-shadow: #BEBEBE 0 0 5px;
+}
+.switch-btn2::after {
+    content: '';
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: 24px;
+    height: 24px;
+    background: #ffffff;
+    border:1px solid #BEBEBE;
+    border-radius: 50%;
 }
 .manage-content .m-header {
     padding: 22px 12px;
@@ -81,12 +161,26 @@ input,button {
     background-repeat: no-repeat;
     background-position: 20px 50%;
 }
+.manage-content .info-title {
+    height: 60px;
+    line-height: 60px;
+    padding-left: 40px;
+    background-color: #F1F1F1;
+    background-image: url('./assets/img-18.png');
+    background-repeat: no-repeat;
+    background-position: 20px 50%;
+}
 /* 下拉框 */
-.manage-content .right {
-    float: right;
+.manage-content .drop-menu {
     width: 170px;
     height: 40px;
+    line-height: 40px;
+    text-align: center;
     border-radius: 6px;
+    background: #F7F7F7;
+    margin-top: 9px;
+    margin-right: 50px;
+    display: inline-block;
     border: 1px solid #DCDCDC;
 }
 /* 文本框 */
@@ -144,7 +238,7 @@ input,button {
     border: 1px solid #EAEAEA;
 }
 .manage-detail {
-    padding-top: 50px;
+    padding: 30px 50px;
 }
 .manage-detail .ipt-normal {
     width: 346px;
@@ -163,8 +257,13 @@ input,button {
 .manage-detail .item {
     padding: 14px 0;
 }
+.manage-detail .detail-content {
+    padding: 50px 0;
+}
+.manage-detail .detail-view .item{
+    padding: 10px 0;
+}
 .save-btn {
-    border: none;
     width: 220px;
     height: 55px;
     line-height: 55px;
@@ -172,5 +271,21 @@ input,button {
     border-radius: 6px;
     font-size: 16px;
     background: #F1CE02;
+}
+/* 个人合计 */
+.ul {
+    text-align: center;
+    padding: 40px 0;
+}
+.ul li {
+    display: inline-block;
+    width: 15%;
+    line-height: 50px;
+    background: #FFD900;
+    font-size: 20px;
+    font-weight: bold;
+    margin: 0 3%;
+    padding: 20px 0;
+    border: 1px solid #CCCCCC;
 }
 </style>

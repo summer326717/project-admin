@@ -17,7 +17,7 @@ export default {
     return {
       iptpage: '',
       currentpage: 1,
-      totalpage: 10
+      totalpage: 1
     }
   },
   props: {
@@ -60,6 +60,12 @@ export default {
   watch: {
     currentpage (val, old) {
       this.$emit('getpage', val)
+    },
+    cur (val) {
+      this.currentpage = val
+    },
+    all (val) {
+      this.totalpage = val
     }
   },
   computed: {
