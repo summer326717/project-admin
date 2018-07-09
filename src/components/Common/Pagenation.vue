@@ -43,15 +43,15 @@ export default {
     },
     searchPage () {
       if (this.iptpage.trim() === '') {
-        alert('请输入页码数')
+        this.$message('请输入页码数')
         return
       }
       if (isNaN(this.iptpage)) {
-        alert('请输入正确的页码数')
+        this.$message('请输入正确的页码数')
         return
       }
       if (parseInt(this.iptpage) > this.totalpage) {
-        alert('输入的页码数不能大于总的页码数')
+        this.$message('输入的页码数不能大于总的页码数')
         return
       }
       this.currentpage = parseInt(this.iptpage)
