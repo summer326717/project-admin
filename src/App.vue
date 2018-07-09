@@ -260,7 +260,7 @@ input,button {
 }
 .manage-content .m-t-content table td{
     text-align: center;
-    padding: 18px 5px;
+    padding: 12px 5px; /*18px 5px;*/
     border: 1px solid #EAEAEA;
 }
 .manage-detail {
