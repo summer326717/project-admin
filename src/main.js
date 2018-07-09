@@ -5,7 +5,7 @@ import App from './App'
 import router from './router'
 import axios from 'axios'
 import { axiosGet, axiosPost } from './assets/serviceApi'
-import { getAgentList } from './utils/common'
+import { getAgentList, changeTime } from './utils/common'
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import NProgress from 'nprogress'
@@ -14,6 +14,7 @@ import 'nprogress/nprogress.css'
 Vue.prototype.$axiosGet = axiosGet
 Vue.prototype.$axiosPost = axiosPost
 Vue.prototype.$axios = axios
+Vue.prototype.$changeTime = changeTime
 Vue.config.productionTip = false
 // 路由结束后，如果不是登录页面就请求获取代理人列表，并本地储存，如果已存在就不用再次请求
 router.afterEach((to, from, next) => {

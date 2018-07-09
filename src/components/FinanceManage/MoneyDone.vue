@@ -62,9 +62,11 @@
                         <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="female"></i></td>
                         <td>{{item.mobile}}</td>
                         <td>{{(item.amount/100).toFixed(2)}}</td>
-                        <td>{{item.createTime}}</td>
+                        <td>{{$changeTime(item.createTime)}}</td>
                         <td>支付宝：{{item.sureAlipay}}</td>
-                        <td><button class="btn-normal" @click="finishMethod(item.userWithdrawId, 2)">完成</button></td>
+                        <td>
+                          <el-button size="small" type="success" plain @click='finishMethod(item.userWithdrawId, 2)'>完成</el-button>
+                        </td>
                     </tr>
                 </table>
                 <div class="no-data" v-if='resultList.length==0'>

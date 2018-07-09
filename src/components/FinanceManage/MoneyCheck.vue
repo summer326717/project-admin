@@ -62,11 +62,11 @@
                         <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="female"></i></td>
                         <td>{{item.mobile}}</td>
                         <td>{{(item.amount/100).toFixed(2)}}</td>
-                        <td>{{item.createTime}}</td>
+                        <td>{{$changeTime(item.createTime)}}</td>
                         <td>支付宝：{{item.sureAlipay}}</td>
                         <td>
-                          <button class="btn-normal" @click='passMethod(item.userWithdrawId, 1)'>通过</button>
-                          <button class="btn-normal" @click='passMethod(item.userWithdrawId, 3)'>拒绝</button>
+                          <el-button size="small" type="success" plain @click='passMethod(item.userWithdrawId, 1)'>通过</el-button>
+                          <el-button size="small" type="danger" plain @click='passMethod(item.userWithdrawId, 3)'>拒绝</el-button>
                         </td>
                     </tr>
                 </table>

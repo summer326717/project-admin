@@ -56,7 +56,7 @@
                 </div>
                 <div class="item">
                     <span class="left-span">姓名</span>
-                    <span>{{userDetail.name}}<i v-if='userDetail.sex==2' class="female"></i><i v-if='userDetail.sex==1' class="female"></i></span>
+                    <span>{{userDetail.name}}<i v-if='userDetail.sex==2' class="female"></i><i v-if='userDetail.sex==1' class="male"></i></span>
                 </div>
                 <div class="item">
                     <span class="left-span">手机号码</span>
@@ -83,11 +83,11 @@
                 </div>
                 <div class="item">
                     <span class="left-span">注册时间</span>
-                    <span>{{userDetail.createTime}}</span>
+                    <span>{{$changeTime(userDetail.createTime)}}</span>
                 </div>
                 <div class="item">
                     <span class="left-span">活跃时间</span>
-                    <span>{{userDetail.updateTime}}</span>
+                    <span>{{$changeTime(userDetail.updateTime)}}</span>
                 </div>
             </div>
         </div>

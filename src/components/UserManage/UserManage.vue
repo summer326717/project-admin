@@ -74,11 +74,11 @@
                     </tr>
                     <tr v-for="(item,i) in resultList" :key="i">
                         <td>{{item.userBaseId}}</td>
-                        <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="female"></i></td>
+                        <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="male"></i></td>
                         <td>--</td>
                         <td>{{item.mobile}}</td>
                         <td>{{item.balance}}</td>
-                        <td>{{item.lastLoginTime}}</td>
+                        <td>{{$changeTime(item.lastLoginTime)}}</td>
                         <td>{{item.agentId}}</td>
                         <td><button @click="changeState(1,item)" v-if='item.state==0' class="switch-btn"></button><button @click="changeState(0,item)" v-if='item.state==1' class="switch-btn2"></button></td>
                         <td>

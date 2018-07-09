@@ -58,10 +58,13 @@
                         <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="female"></i></td>
                         <td>{{item.mobile}}</td>
                         <td>{{(item.amount/100).toFixed(2)}}</td>
-                        <td>{{item.createTime}}</td>
-                        <td>
-                            <p>{{item.sloveTime}}</p>
-                            <p>{{item.rejectReason}}</p>
+                        <td>{{$changeTime(item.createTime)}}</td>
+                        <td style="text-align:left">
+                            <p v-if='item.state==3'>{{$changeTime(item.createTime)}}</p>
+                            <p v-if='item.state==2'>{{$changeTime(item.sloveTime)}}</p>
+                            <el-tooltip class="item" effect="dark" :content="item.rejectReason" placement="top-start">
+                                <p class="textEll">{{item.rejectReason}}</p>
+                            </el-tooltip>
                         </td>
                     </tr>
                 </table>

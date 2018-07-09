@@ -11,7 +11,7 @@ export default {
 </script>
 
 <style>
-html, body, #app {
+html, body, #app, .container, .right-content {
   height: 100%;
 }
 body,p,ul {
@@ -32,6 +32,9 @@ input {
 input,button {
     outline: none;
     border: none;
+}
+.manage-content {
+    min-height: calc(100% - 50px);
 }
 .el-dropdown-menu {
     max-height: 400px;
@@ -62,6 +65,14 @@ input,button {
   border-radius:5px;
   -webkit-box-shadow:inset 0 0 5px rgba(238,240,247,0);
   background-color:#dcdee6
+}
+.textEll{
+    width: 400px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;/*定义行数*/
+    -webkit-box-orient: vertical;
 }
 #app {
   font-family: 'Microsoft YaHei', Helvetica, Arial, sans-serif;
@@ -135,6 +146,7 @@ input,button {
     border-radius: 50%;
 }
 .manage-content .m-header {
+    font-size: 16px;
     padding: 22px 12px;
     background: #F1F1F1;
     border-bottom: 1px solid #E9E9E9;
@@ -174,6 +186,8 @@ input,button {
     height: 60px;
     line-height: 60px;
     padding-left: 40px;
+    margin: 30px 0;
+    font-size: 16px;
     background-color: #F1F1F1;
     background-image: url('./assets/img-18.png');
     background-repeat: no-repeat;
@@ -246,11 +260,12 @@ input,button {
 }
 .manage-content .m-t-content table td{
     text-align: center;
-    padding: 18px 0;
+    padding: 18px 5px;
     border: 1px solid #EAEAEA;
 }
 .manage-detail {
-    padding: 30px 50px;
+    font-size: 14px;
+    padding: 0 50px;
 }
 .manage-detail .ipt-normal {
     width: 346px;
@@ -276,7 +291,7 @@ input,button {
     padding: 50px 0;
 }
 .manage-detail .detail-view .item{
-    padding: 10px 0;
+    padding: 8px 0;
 }
 .save-btn {
     width: 220px;
@@ -294,13 +309,14 @@ input,button {
 }
 .ul li {
     display: inline-block;
-    width: 15%;
+    width: 154px;
+    height: 104px;
     line-height: 50px;
     background: #FFD900;
     font-size: 20px;
     font-weight: bold;
-    margin: 0 3%;
-    padding: 20px 0;
+    margin: 0 50px;
+    padding: 25px 0;
     border: 1px solid #CCCCCC;
 }
 </style>

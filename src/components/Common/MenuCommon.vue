@@ -2,18 +2,52 @@
     <div class="container">
         <div class="left-menu">
             <p class="menu-title">赏金猎人</p>
-            <ul>
-                <li v-for="(item,i) in menuList" :key="i">
-                    <a :class="{'active':'/'+onRoutes==item.menuLink}" @click="openMenu(i,item.menuItem.length,item.menuLink)">{{item.menuName}}<i class="i-arrow" :class="{'hide':item.menuItem.length===0}"></i></a>
-                    <div class="second-menu">
-                        <router-link v-for="(seconditem,index) in item.menuItem" :key="index" :to="seconditem.menuLink">{{seconditem.menuName}}</router-link>
-                    </div>
-                </li>
-            </ul>
+            <el-menu router
+              default-active="2"
+              class="el-menu-vertical-demo"
+              @open="handleOpen"
+              @close="handleClose"
+              background-color="#14191E"
+              text-color="#787878"
+              active-text-color="#F1CE02">
+              <el-menu-item index="/AgentManage">
+                <i class="el-icon-tickets"></i>
+                <span slot="title">代理人管理</span>
+              </el-menu-item>
+              <el-menu-item index="/UserManage">
+                <i class="el-icon-document"></i>
+                <span slot="title">用户管理</span>
+              </el-menu-item>
+              <el-submenu index="3">
+                <template slot="title">
+                  <i class="el-icon-menu"></i>
+                  <span>财务管理</span>
+                </template>
+                <el-menu-item-group>
+                  <el-menu-item index="/MoneyCheck">提现审核</el-menu-item>
+                  <el-menu-item index="/MoneyDone">提现操作</el-menu-item>
+                  <el-menu-item index="/PlatAccount">平台账户</el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
+              <el-submenu index="4" disabled>
+                <template slot="title">
+                  <i class="el-icon-setting"></i>
+                  <span>系统管理</span>
+                </template>
+                <el-menu-item-group>
+                  <el-menu-item index="/RateManage">汇率管理</el-menu-item>
+                  <el-menu-item index="/RewordSetting">奖励设置</el-menu-item>
+                </el-menu-item-group>
+              </el-submenu>
+            </el-menu>
             <p class="sign-out" @click="signOut"><img src="../../assets/img-13.png"></p>
         </div>
         <div class="right-content">
-            <router-view></router-view>
+            <transition name="fade-transform" mode="out-in">
+                <keep-alive>
+                    <router-view></router-view>
+                </keep-alive>
+            </transition>
             <footer>
                 版权所有 @ 的是的撒大
             </footer>
@@ -70,37 +104,17 @@ export default {
       ]
     }
   },
-  mounted () {
-    let element = document.getElementsByClassName('router-link-active')[0]
-    if (element) {
-      let h = element.parentElement.children[0].clientHeight
-      let count = element.parentElement.childElementCount
-      element.parentElement.style.height = h * count + 'px'
-      element.parentNode.previousElementSibling.children[0].style.transform = 'rotate(-180deg)'
-    }
-  },
   methods: {
-    openMenu (i, totalnum, menuLink) {
-      if (totalnum > 0) {
-        let height = document.getElementsByClassName('second-menu')[i].children[0].clientHeight
-        let num = document.getElementsByClassName('second-menu')[i].children.length
-        let parentHeight = document.getElementsByClassName('second-menu')[i].clientHeight
-        if (parentHeight === 0) {
-          document.getElementsByClassName('i-arrow')[i].style.transform = 'rotate(-180deg)'
-          document.getElementsByClassName('second-menu')[i].style.height = (height * num) + 'px'
-        } else {
-          document.getElementsByClassName('i-arrow')[i].style.transform = ''
-          document.getElementsByClassName('second-menu')[i].style.height = '0px'
-        }
-      } else {
-        console.log('没有二级菜单')
-        this.$router.push({'path': menuLink})
-      }
-    },
     signOut () {
       localStorage.removeItem('token')
       sessionStorage.removeItem('token')
       this.$router.push({path: '/'})
+    },
+    handleOpen (key, keyPath) {
+      console.log(key, keyPath)
+    },
+    handleClose (key, keyPath) {
+      console.log(key, keyPath)
     }
   },
   computed: {
@@ -113,6 +127,19 @@ export default {
 </script>
 
 <style>
+/*fade-transform*/
+.fade-transform-leave-active,
+.fade-transform-enter-active {
+  transition: all .5s;
+}
+.fade-transform-enter {
+  opacity: 0;
+  transform: translateX(-30px);
+}
+.fade-transform-leave-to {
+  opacity: 0;
+  transform: translateX(30px);
+}
 .container .left-menu {
     position: fixed;
     width: 180px;
@@ -140,40 +167,6 @@ export default {
 }
 .container .left-menu ul::-webkit-scrollbar-thumb{
     display: none;
-}
-.container .left-menu ul li a {
-    padding-left: 20px;
-    color: #787878;
-    height: 42px;
-    line-height: 42px;
-    display: block;
-    border-top: 1px solid #111519;
-    transition: all 0.4s ease-in-out;
-}
-.container .left-menu .router-link-active {
-  color: #f2ce00;
-  box-shadow: 3px 0 0 #f2ce00 inset;
-}
-.container .left-menu ul li a:hover {
-    background: #373a3e;
-    box-shadow: 3px 0 0 #f2ce00 inset;
-}
-.container .left-menu ul li .i-arrow {
-    float: right;
-    width: 16px;
-    height: 16px;
-    margin: 13px 13px 0 0;
-    background: url('../../assets/menu-open.png') no-repeat 90% 50%;
-    background-size: 16px 16px;
-    transition: transform 0.4s ease-in-out;
-}
-.container .left-menu .second-menu{
-    height: 0;
-    overflow: hidden;
-    transition: height 0.4s ease-in-out;
-}
-.container .left-menu .second-menu a{
-    padding-left: 40px;
 }
 .container .left-menu .sign-out {
   position: absolute;

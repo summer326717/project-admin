@@ -60,7 +60,7 @@
                 </div>
                 <div class="item">
                     <span class="left-span">姓名</span>
-                    <span>{{userObj.nickName}}<i v-if='userObj.sex==2' class="female"></i><i v-if='userObj.sex==1' class="female"></i></span>
+                    <span>{{userObj.nickName}}<i v-if='userObj.sex==2' class="female"></i><i v-if='userObj.sex==1' class="male"></i></span>
                 </div>
                 <div class="item">
                     <span class="left-span">手机号码</span>
@@ -80,11 +80,11 @@
                 </div>
                 <div class="item">
                     <span class="left-span">注册时间</span>
-                    <span>{{userObj.createTime}}</span>
+                    <span>{{$changeTime(userObj.createTime)}}</span>
                 </div>
                 <div class="item">
                     <span class="left-span">上次登录时间</span>
-                    <span>{{userObj.lastLoginTime}}</span>
+                    <span>{{$changeTime(userObj.lastLoginTime)}}</span>
                 </div>
                 <div class="info-title">
                     <span>账户信息</span>
