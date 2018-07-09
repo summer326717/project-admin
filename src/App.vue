@@ -37,6 +37,15 @@ input,button {
     max-height: 400px;
     overflow-y: scroll;
 }
+.el-input__inner {
+    background: #F7F7F7;
+}
+.el-input--suffix .el-input__inner {
+    padding-left: 10px;
+}
+.el-input.is-active .el-input__inner, .el-input__inner:focus {
+    border: 1px solid #F1CE02;
+}
 /* 自定义滚动条 */
 ::-webkit-scrollbar{
   width:5px;

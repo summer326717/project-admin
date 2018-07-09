@@ -53,7 +53,7 @@
                         <th>备注</th>
                     </tr>
                     <tr v-for="(item,i) in resultList" :key="i">
-                        <td>11111</td>
+                        <td>{{i+(pageNo-1)*pageSize}}</td>
                         <td>{{item.userId}}</td>
                         <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="female"></i></td>
                         <td>{{item.mobile}}</td>
@@ -85,7 +85,8 @@ export default {
       alipay: '',
       pageNo: 1,
       pageSize: 10,
-      userId: ''
+      userId: '',
+      sortType: 2
     }
   },
   components: {
@@ -104,12 +105,18 @@ export default {
       this.getData()
     },
     getData () {
+      if (this.mobile) {
+        if (!/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(this.mobile)) {
+          this.$message('请输入正确手机号')
+          return false
+        }
+      }
       let json = {
-        alipay: '',
+        userName: this.nickName,
+        phoneNo: this.mobile,
         pageNo: '',
         pageSize: '',
-        userId: '',
-        sortType: 2,
+        sortType: this.sortType,
         state: '23'
       }
       this.$axiosPost('/back/queryWithdrawInfoList', json).then((res) => {

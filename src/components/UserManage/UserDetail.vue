@@ -39,7 +39,7 @@
                             slot="suffix">
                         </i>
                         <template slot-scope="{item}">
-                            <span class="addr">{{item.name}}{{item.value}}</span>
+                            <span class="addr">{{item.name}}&nbsp;{{item.value}}</span>
                         </template>
                         </el-autocomplete>
                     </span>
@@ -72,7 +72,7 @@
                 </div>
                 <div class="item">
                     <span class="left-span">代理人</span>
-                    <span>{{userObj.agentId}}--</span>
+                    <span>{{userObj.agentId}} {{userObj.agentName}}</span>
                 </div>
                 <div class="item">
                     <span class="left-span">地区</span>
@@ -163,11 +163,11 @@ export default {
         this.$message('姓名不能为空')
         return false
       }
-      if (this.nickName.length >= 2) {
+      if (this.nickName.length < 2) {
         this.$message('姓名不能小于两个字')
         return false
       }
-      if (this.nickName.length <= 50) {
+      if (this.nickName.length > 50) {
         this.$message('姓名不能大于50个字')
         return false
       }
@@ -202,6 +202,7 @@ export default {
             message: res.message,
             type: 'success'
           })
+          this.$router.back(-1)
         } else {
           this.$message.error(res.message)
         }
@@ -219,6 +220,7 @@ export default {
           this.mobile = res.data.mobile
           this.sex = res.data.sex.toString()
           this.agentId = res.data.agentId
+          this.agentName = res.data.agentName
           this.yesterdayEarn = res.data.yesterdayEarn
           this.todayEarnGold = res.data.totalEarnMoney
           this.totalEarnMoney = res.data.totalEarnMoney
@@ -230,7 +232,6 @@ export default {
     },
     EditUserInfo () {
       if (!this.checkUser()) {
-        this.$message('请填写完整信息')
         return
       }
       let json = {
@@ -247,6 +248,7 @@ export default {
             message: res.message,
             type: 'success'
           })
+          this.$router.back(-1)
         } else {
           this.$message.error(res.message)
         }

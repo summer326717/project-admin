@@ -88,7 +88,8 @@ export default {
       pageNo: 1,
       pageSize: 10,
       userId: '',
-      sortType: 2
+      sortType: 2,
+      totalPages: 1
     }
   },
   components: {
@@ -107,17 +108,24 @@ export default {
       this.getData()
     },
     getData () {
+      if (this.mobile) {
+        if (!/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(this.mobile)) {
+          this.$message('请输入正确手机号')
+          return false
+        }
+      }
       let json = {
-        alipay: '',
+        userName: this.nickName,
+        phoneNo: this.mobile,
         pageNo: this.pageNo,
         pageSize: this.pageSize,
-        userId: '',
         state: 1, // 打款中
         sortType: this.sortType
       }
       this.$axiosPost('/back/queryWithdrawInfoList', json).then((res) => {
         if (res.code === 0) {
           this.resultList = res.data.resultList
+          this.totalPages = res.data.pageTotal
         } else {
           this.resultList = []
         }

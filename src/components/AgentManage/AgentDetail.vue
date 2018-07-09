@@ -129,11 +129,11 @@ export default {
         this.$message('姓名不能为空')
         return false
       }
-      if (this.name.length >= 2) {
+      if (this.name.length < 2) {
         this.$message('姓名不能小于两个字')
         return false
       }
-      if (this.name.length <= 50) {
+      if (this.name.length > 50) {
         this.$message('姓名不能大于50个字')
         return false
       }
@@ -172,6 +172,7 @@ export default {
             message: res.message,
             type: 'success'
           })
+          this.$router.back(-1)
         } else {
           this.$message.error(res.message)
         }
@@ -204,7 +205,6 @@ export default {
     },
     EditUserInfo () {
       if (!this.checkAgent()) {
-        this.$message('请填写完整信息')
         return
       }
       let json = {
@@ -216,11 +216,12 @@ export default {
         idNumber: this.idNumber
       }
       this.$axiosPost('/back/updateAgentInfo', json).then((res) => {
-        if (res.code) {
+        if (res.code === 0) {
           this.$message({
             message: res.message,
             type: 'success'
           })
+          this.$router.back(-1)
         } else {
           this.$message.error(res.message)
         }

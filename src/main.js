@@ -17,14 +17,16 @@ Vue.prototype.$axios = axios
 Vue.config.productionTip = false
 // 路由结束后，如果不是登录页面就请求获取代理人列表，并本地储存，如果已存在就不用再次请求
 router.afterEach((to, from, next) => {
-  if (to.path !== '/Login') {
+  if (to.path !== '/Login' && to.path !== '/') {
     if (!sessionStorage.getItem('agentList')) {
       getAgentList().then((res) => {
-        let dataList = []
-        res.data.resultList.map((v, i) => {
-          dataList.push({value: v.name, name: v.agentId})
-        })
-        sessionStorage.setItem('agentList', JSON.stringify(dataList))
+        if (res.data) {
+          let dataList = []
+          res.data.resultList.map((v, i) => {
+            dataList.push({value: v.name, name: v.agentId})
+          })
+          sessionStorage.setItem('agentList', JSON.stringify(dataList))
+        }
       })
     }
   }

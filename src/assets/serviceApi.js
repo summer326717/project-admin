@@ -73,6 +73,7 @@ export function axiosGet (url, params) {
 }
 
 export function axiosPost (url, data) {
+  console.log(data)
   return new Promise((resolve, reject) => {
     axios.post(url, data).then(response => {
       if (response.data.code === 9999) {

@@ -20,14 +20,14 @@
                         popper-class="my-autocomplete"
                         v-model="agentName"
                         :fetch-suggestions="querySearch"
-                        placeholder="请输入填写代理人"
+                        placeholder=""
                         @select="changeAgent">
                     <i
                         class="el-icon-edit el-input__icon"
                         slot="suffix">
                     </i>
                     <template slot-scope="{item}">
-                        <span class="addr">{{item.name}}{{item.value}}</span>
+                        <span class="addr">{{item.name}}&nbsp;{{item.value}}</span>
                     </template>
                     </el-autocomplete>
                 </span>
@@ -134,6 +134,12 @@ export default {
       cb(results)
     },
     getData () {
+      if (this.mobile) {
+        if (!/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(this.mobile)) {
+          this.$message('请输入正确手机号')
+          return false
+        }
+      }
       let json = {
         pageNo: this.pageNo,
         pageSize: this.pageSize,

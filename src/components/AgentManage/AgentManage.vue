@@ -100,6 +100,12 @@ export default {
   },
   methods: {
     getData () {
+      if (this.mobile) {
+        if (!/^(13[0-9]|14[579]|15[0-3,5-9]|16[6]|17[0135678]|18[0-9]|19[89])\d{8}$/.test(this.mobile)) {
+          this.$message('请输入正确手机号')
+          return false
+        }
+      }
       let json = {
         pageNo: this.pageNo,
         pageSize: this.pageSize,

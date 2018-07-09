@@ -1,7 +1,7 @@
 import { axiosPost } from '../assets/serviceApi'
 
 export function checkNull (e) {
-  if (e === '' || e === null || e === undefined || e.trim().length === 0) {
+  if (e === '' || e === null || e === undefined || e.toString().trim().length === 0) {
     return false
   } else {
     return true
