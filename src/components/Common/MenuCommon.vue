@@ -44,9 +44,7 @@
         </div>
         <div class="right-content">
             <transition name="fade-transform" mode="out-in">
-                <keep-alive>
-                    <router-view></router-view>
-                </keep-alive>
+              <router-view></router-view>
             </transition>
             <footer>
                 版权所有 @ 的是的撒大
