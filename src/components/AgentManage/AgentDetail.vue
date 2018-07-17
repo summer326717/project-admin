@@ -125,6 +125,10 @@ export default {
         this.$message('账号不能为空')
         return false
       }
+      if (!/^[a-zA-Z0-9_-]{4,16}$/.test(this.account)) {
+        this.$message('账号必须为大于4个字符，小于16个字符的数字和字母')
+        return
+      }
       if (!utils.checkNull(this.name)) {
         this.$message('姓名不能为空')
         return false

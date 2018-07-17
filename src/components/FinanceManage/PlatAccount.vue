@@ -55,7 +55,7 @@
                     <tr v-for="(item,i) in resultList" :key="i">
                         <td>{{i+(pageNo-1)*pageSize}}</td>
                         <td>{{item.userId}}</td>
-                        <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="female"></i></td>
+                        <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="male"></i></td>
                         <td>{{item.mobile}}</td>
                         <td>{{(item.amount/100).toFixed(2)}}</td>
                         <td>{{$changeTime(item.createTime)}}</td>
