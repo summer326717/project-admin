@@ -180,6 +180,7 @@ export default {
       this.getData()
     },
     changePageSize (e) {
+      this.pageNo = 1
       this.pageSize = e
       this.getData()
     }
