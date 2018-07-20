@@ -74,6 +74,12 @@ input,button {
     -webkit-line-clamp: 2;/*定义行数*/
     -webkit-box-orient: vertical;
 }
+.tc {
+    text-align: center;
+}
+.pt40 {
+    padding-top: 40px;
+}
 #app {
   font-family: 'Microsoft YaHei', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
@@ -267,16 +273,20 @@ input,button {
     font-size: 14px;
     padding: 0 50px;
 }
-.manage-detail .ipt-normal {
+.manage-detail .ipt-normal, .manage-detail .ipt-small {
     width: 346px;
     height: 36px;
     line-height: 36px;
     padding-left: 10px;
     border-radius: 6px;
+    background: #ffffff;
     border: 1px solid #EBEBEB;
 }
-.manage-detail .ipt-normal:focus {
+.manage-detail .ipt-normal:focus, .manage-detail .ipt-small:focus {
     border: 1px solid #FFCD69
+}
+.manage-detail .ipt-small {
+    width: 150px;
 }
 .manage-detail .left-span {
     width: 40%;
@@ -292,6 +302,9 @@ input,button {
 }
 .manage-detail .detail-view .item{
     padding: 8px 0;
+}
+.manage-detail .range-icon {
+    padding: 0 10px;
 }
 .save-btn {
     width: 220px;

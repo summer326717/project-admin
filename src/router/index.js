@@ -51,6 +51,11 @@ export default new Router({
           component: resolve => require(['../components/FinanceManage/PlatAccount'], resolve)
         },
         {
+          path: '/EditRate',
+          name: 'EditRate',
+          component: resolve => require(['../components/SystemManage/EditRate'], resolve)
+        },
+        {
           path: '/RateManage',
           name: 'RateManage',
           component: resolve => require(['../components/SystemManage/RateManage'], resolve)

@@ -142,6 +142,8 @@ export default {
           type: 'warning'
         }).then(() => {
           this.passCheck('', state, userWithdrawId)
+        }).catch(() => {
+          // 取消
         })
       } else {
         this.$prompt('拒绝原因', '提示', {
@@ -150,6 +152,8 @@ export default {
           inputErrorMessage: '邮箱格式不正确'
         }).then(({ value }) => {
           this.passCheck(value, state, userWithdrawId)
+        }).catch(() => {
+          // 取消
         })
       }
     },

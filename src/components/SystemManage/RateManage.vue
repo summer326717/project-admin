@@ -6,7 +6,7 @@
         <div class="m-limit">
             <div class="m-title">
                 <span>筛选条件</span>
-                <button class="btn-normal" @click="getData()">修改汇率</button>
+                <button class="btn-normal" @click="updateRate()">修改汇率</button>
                 <button class="btn-normal" @click="getData()">查询</button>
             </div>
             <div class="ptb20">
@@ -50,11 +50,11 @@
                         <th>结算时间</th>
                     </tr>
                     <tr v-for="(item,i) in resultList" :key="i">
+                        <td>{{$changeTime(item.time)}}</td>
                         <td>11111</td>
                         <td>11111</td>
                         <td>11111</td>
-                        <td>11111</td>
-                        <td>{{$changeTime()}}</td>
+                        <td>{{$changeTime(item.time)}}</td>
                     </tr>
                 </table>
                 <div class="no-data" v-if='resultList.length==0'>
@@ -72,9 +72,11 @@ export default {
   data () {
     return {
       resultList: [],
-      pageNo: '1',
-      pageSize: '10',
-      totalPages: 1
+      pageNo: 1,
+      pageSize: 10,
+      totalPages: 1,
+      sortType: 2,
+      time: ''
     }
   },
   created () {
@@ -87,9 +89,11 @@ export default {
     getData () {
       let json = {
         pageNo: this.pageNo,
-        pageSize: this.pageSize
+        pageSize: this.pageSize,
+        sortType: this.sortType,
+        time: this.time
       }
-      this.$axiosPost('/back/demo', json).then((res) => {
+      this.$axiosPost('/back/queryUserInfoList', json).then((res) => {
         if (res.code === 0) {
           this.resultList = res.data.resultList
           this.totalPages = res.data.pageTotal
@@ -101,6 +105,18 @@ export default {
     getPage (e) {
       this.pageNo = e
       this.getData()
+    },
+    changeSort (e) {
+      this.sortType = e
+      this.getData()
+    },
+    changePageSize (e) {
+      this.pageNo = 1
+      this.pageSize = e
+      this.getData()
+    },
+    updateRate () {
+      this.$router.push({ path: '/EditRate' })
     }
   }
 }

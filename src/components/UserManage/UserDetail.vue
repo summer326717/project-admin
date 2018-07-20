@@ -104,7 +104,7 @@
                             <p>昨日收益</p>
                         </li>
                         <li>
-                            <p>{{(userObj.todayEarnGold/100).toFixed(2)}}</p>
+                            <p>{{userObj.todayEarnGold}}</p>
                             <p>今日金币</p>
                         </li>
                     </ul>

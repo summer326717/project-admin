@@ -134,19 +134,27 @@ export default {
       })
     },
     finishMethod (userWithdrawId, state) {
-      let json = {
-        userWithdrawId: userWithdrawId
-      }
-      this.$axiosPost('/back/handleWithdrawInfo', json).then((res) => {
-        if (res.code === 0) {
-          this.getData()
-          this.$message({
-            message: res.message,
-            type: 'success'
-          })
-        } else {
-          this.$message.error(res.message)
+      this.$confirm('是否已经该账户转账了？', '提示', {
+        confirmButtonText: '是',
+        cancelButtonText: '否',
+        type: 'warning'
+      }).then(() => {
+        let json = {
+          userWithdrawId: userWithdrawId
         }
+        this.$axiosPost('/back/handleWithdrawInfo', json).then((res) => {
+          if (res.code === 0) {
+            this.getData()
+            this.$message({
+              message: res.message,
+              type: 'success'
+            })
+          } else {
+            this.$message.error(res.message)
+          }
+        })
+      }).catch(() => {
+        // 取消删除
       })
     },
     getPage (e) {

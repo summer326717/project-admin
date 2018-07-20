@@ -77,10 +77,10 @@ export function axiosPost (url, data) {
   return new Promise((resolve, reject) => {
     axios.post(url, data).then(response => {
       if (response.data.code === 9999) {
-        this.$message.error(response.data.msg)
+        this.$message.error(response.data.message)
       }
       if (response.data.code === -10000000) {
-        this.$message.error(response.data.msg)
+        this.$message.error(response.data.message)
       }
       if (response.data.code === 100) {
         this.$router.push({path: 'Login'})
