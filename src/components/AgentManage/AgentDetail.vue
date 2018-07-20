@@ -95,6 +95,7 @@
 </template>
 
 <script>
+import { getAgentList } from '../../utils/common'
 let utils = require('../../utils/common')
 export default {
   data () {
@@ -172,13 +173,27 @@ export default {
       }
       this.$axiosPost('/back/saveAgentInfo', json).then((res) => {
         if (res.code === 0) {
+          this.queryList()
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
+    queryList () {
+      getAgentList().then((res) => {
+        if (res.data) {
+          let dataList = []
+          res.data.resultList.map((v, i) => {
+            dataList.push({value: v.name, name: v.agentId})
+          })
+          sessionStorage.setItem('agentList', JSON.stringify(dataList))
           this.$message({
             message: res.message,
             type: 'success'
           })
           this.$router.back(-1)
         } else {
-          this.$message.error(res.message)
+          this.$message(res.message)
         }
       })
     },
@@ -221,11 +236,7 @@ export default {
       }
       this.$axiosPost('/back/updateAgentInfo', json).then((res) => {
         if (res.code === 0) {
-          this.$message({
-            message: res.message,
-            type: 'success'
-          })
-          this.$router.back(-1)
+          this.queryList()
         } else {
           this.$message.error(res.message)
         }
