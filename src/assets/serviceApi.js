@@ -85,6 +85,9 @@ export function axiosPost (url, data) {
       if (response.data.code === 100) {
         this.$router.push({path: 'Login'})
       }
+      if (response.data.code === 501) {
+        this.$message.error(response.data.message + '，请将电脑系统时间设置正确。')
+      }
       console.log(response.data)
       resolve(response.data)
     }, err => {
