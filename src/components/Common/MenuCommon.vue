@@ -46,9 +46,7 @@
             <transition name="fade-transform" mode="out-in">
               <router-view></router-view>
             </transition>
-            <footer>
-                版权所有 @ 的是的撒大
-            </footer>
+            <footer>&copy; 2018 杭州音聚网络科技有限公司 版权所有</footer>
         </div>
     </div>
 </template>

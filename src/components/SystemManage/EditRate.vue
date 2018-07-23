@@ -51,6 +51,13 @@ export default {
       let json = {
         time: ''
       }
+      this.$axiosPost('/back/demo', json).then((res) => {
+        if (res.code === 0) {
+          // success
+        } else {
+          this.$message.error(res.message)
+        }
+      })
     }
   }
 }
