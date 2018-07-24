@@ -93,9 +93,9 @@ export default {
         sortType: this.sortType,
         time: this.time
       }
-      this.$axiosPost('/back/queryUserInfoList', json).then((res) => {
+      this.$axiosPost('/back/queryGoldRuleList', json).then((res) => {
         if (res.code === 0) {
-          this.resultList = res.data.resultList
+          // this.resultList = res.data.resultList
           this.totalPages = res.data.pageTotal
         } else {
           this.resultList = []

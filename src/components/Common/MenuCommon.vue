@@ -29,7 +29,7 @@
                   <el-menu-item index="/PlatAccount">平台账户</el-menu-item>
                 </el-menu-item-group>
               </el-submenu>
-              <el-submenu index="4" disabled>
+              <el-submenu index="4">
                 <template slot="title">
                   <i class="el-icon-setting"></i>
                   <span>系统管理</span>
