@@ -50,11 +50,11 @@
                         <th>结算时间</th>
                     </tr>
                     <tr v-for="(item,i) in resultList" :key="i">
-                        <td>{{$changeTime(item.time)}}</td>
-                        <td>11111</td>
-                        <td>11111</td>
-                        <td>11111</td>
-                        <td>{{$changeTime(item.time)}}</td>
+                        <td>{{$changeTime(item.effectiveDate)}}</td>
+                        <td>{{item.rateDay}}</td>
+                        <td>{{item.goldNum}}</td>
+                        <td>{{item.moneyNum}}</td>
+                        <td>{{$changeTime(item.settlementTime)}}</td>
                     </tr>
                 </table>
                 <div class="no-data" v-if='resultList.length==0'>
@@ -76,7 +76,7 @@ export default {
       pageSize: 10,
       totalPages: 1,
       sortType: 2,
-      time: ''
+      effectiveDate: ''
     }
   },
   created () {
@@ -91,11 +91,11 @@ export default {
         pageNo: this.pageNo,
         pageSize: this.pageSize,
         sortType: this.sortType,
-        time: this.time
+        effectiveDate: this.effectiveDate
       }
-      this.$axiosPost('/back/queryGoldRuleList', json).then((res) => {
+      this.$axiosPost('/back/queryGoldToMnyRateList', json).then((res) => {
         if (res.code === 0) {
-          // this.resultList = res.data.resultList
+          this.resultList = res.data.resultList
           this.totalPages = res.data.pageTotal
         } else {
           this.resultList = []

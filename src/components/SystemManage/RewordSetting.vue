@@ -17,9 +17,9 @@
             </div>
             <div class="item">
                 <span class="left-span">*金币奖励范围</span>
-                <input class="ipt-small" type="text" v-model="goldUpperNum">
-                <span class="range-icon">-</span>
                 <input class="ipt-small" type="text" v-model="goldLowerNum">
+                <span class="range-icon">-</span>
+                <input class="ipt-small" type="text" v-model="goldUpperNum">
             </div>
             <div class="tc pt40"><button class="save-btn" @click="updateRate">保存</button></div>
         </div>
@@ -37,9 +37,24 @@ export default {
       goldUpperNum: ''
     }
   },
+  created () {
+    this.getData()
+  },
   methods: {
     reloadUser () {
       this.data = ''
+    },
+    getData () {
+      this.$axiosGet('/back/queryGoldRuleUsing', '').then((res) => {
+        if (res.code === 0) {
+          this.goldDayUpperNum = res.data.dayGoldUpperLimit
+          this.goldLowerNum = res.data.rewardLowerLimit
+          this.goldRandomTime = res.data.randomGoldTime
+          this.goldUpperNum = res.data.rewardUpperLimit
+        } else {
+          this.$message.error(res.message)
+        }
+      })
     },
     updateRate () {
       if (!utils.checkNull(this.goldDayUpperNum)) {
@@ -58,7 +73,7 @@ export default {
         this.$message('金币奖励范围上限不能为空')
         return false
       }
-      if (parseInt(this.goldLowerNum) <= parseInt(this.goldUpperNum)) {
+      if (parseInt(this.goldLowerNum) >= parseInt(this.goldUpperNum)) {
         this.$message('请输入正确范围值')
         return false
       }

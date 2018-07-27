@@ -17,7 +17,7 @@
             </div>
             <div class="item">
                 <span class="left-span">*汇率</span>
-                <input class="ipt-normal" type="text">
+                <input class="ipt-normal" type="text" v-model="goldRate">
             </div>
             <div class="item">
                 <p>兑换规格：零钱 = 金币 * 汇率 / 1000</p>
@@ -28,7 +28,7 @@
                     <span>零钱（元）</span>
                     <button>转换</button>
                 </div>
-                <div class="tc"><button class="save-btn">保存</button></div>
+                <div class="tc"><button @click="updateRate" class="save-btn">保存</button></div>
             </div>
         </div>
     </div>
@@ -38,8 +38,9 @@
 export default {
   data () {
     return {
-      nowTime: '',
-      tomorTime: ''
+      nowTime: '', // 生效时间
+      tomorTime: '', // 结算时间
+      goldRate: ''
     }
   },
   created () {
@@ -49,11 +50,15 @@ export default {
   methods: {
     updateRate () {
       let json = {
-        time: ''
+        goldRate: this.goldRate
       }
-      this.$axiosPost('/back/demo', json).then((res) => {
+      this.$axiosPost('/back/saveGoldToMnyRate', json).then((res) => {
         if (res.code === 0) {
-          // success
+          this.$message({
+            message: res.message,
+            type: 'success'
+          })
+          this.$router.back(-1)
         } else {
           this.$message.error(res.message)
         }
