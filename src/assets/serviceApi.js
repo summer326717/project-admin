@@ -61,10 +61,32 @@ axios.interceptors.response.use(
 )
 
 export function axiosGet (url, params) {
+  const loading = this.$loading({
+    lock: true,
+    text: '加载中...',
+    spinner: 'el-icon-loading',
+    background: 'rgba(0, 0, 0, 0.3)'
+  })
+  console.log(params)
   return new Promise((resolve, reject) => {
     axios.get(url, {params: params}).then(response => {
+      console.log(response.data)
+      if (response.data.code === 9999) {
+        this.$message.error(response.data.message)
+      }
+      if (response.data.code === -10000000) {
+        this.$message.error(response.data.message)
+      }
+      if (response.data.code === 100) {
+        this.$router.push({path: 'Login'})
+      }
+      if (response.data.code === 501) {
+        this.$message.error(response.data.message + '，请将电脑系统时间设置正确。')
+      }
+      loading.close()
       resolve(response.data)
     }).catch(err => {
+      loading.close()
       console.log(err)
       console.log(err.message)
       reject(err)
@@ -101,7 +123,6 @@ export function axiosPost (url, data) {
       loading.close()
       console.log(err)
       console.log(err.message)
-      // reject(err)
       this.$message.error('接口出错，请稍后再试')
     })
   })
