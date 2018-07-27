@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>系统设置 > 奖励设置</span><button class="btn-gray" @click="reloadUser()">刷新</button></p>
+            <p><span>系统设置 > 奖励设置</span><button class="btn-gray" @click="reloadSet()">刷新</button></p>
         </div>
         <div class="manage-detail">
             <div class="info-title">
@@ -41,8 +41,8 @@ export default {
     this.getData()
   },
   methods: {
-    reloadUser () {
-      this.data = ''
+    reloadSet () {
+      this.getData()
     },
     getData () {
       this.$axiosGet('/back/queryGoldRuleUsing', '').then((res) => {

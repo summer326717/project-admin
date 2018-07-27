@@ -73,6 +73,12 @@ export function axiosGet (url, params) {
 }
 
 export function axiosPost (url, data) {
+  const loading = this.$loading({
+    lock: true,
+    text: '加载中...',
+    spinner: 'el-icon-loading',
+    background: 'rgba(0, 0, 0, 0.3)'
+  })
   console.log(data)
   return new Promise((resolve, reject) => {
     axios.post(url, data).then(response => {
@@ -89,8 +95,10 @@ export function axiosPost (url, data) {
         this.$message.error(response.data.message + '，请将电脑系统时间设置正确。')
       }
       console.log(response.data)
+      loading.close()
       resolve(response.data)
     }, err => {
+      loading.close()
       console.log(err)
       console.log(err.message)
       // reject(err)

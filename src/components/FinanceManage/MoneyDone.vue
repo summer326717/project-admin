@@ -52,6 +52,8 @@
                         <th>手机号码</th>
                         <th>提现金额（元）</th>
                         <th>申请时间</th>
+                        <th>手续费</th>
+                        <th>应付金额</th>
                         <th>提现方式</th>
                         <th>操作</th>
                     </tr>
@@ -63,6 +65,8 @@
                         <td>{{item.mobile}}</td>
                         <td>{{(item.amount/100).toFixed(2)}}</td>
                         <td>{{$changeTime(item.createTime)}}</td>
+                        <td>{{(item.poundageAmount/100).toFixed(2)}}</td>
+                        <td>{{(item.moneyPayable/100).toFixed(2)}}</td>
                         <td>支付宝：{{item.sureAlipay}}</td>
                         <td>
                           <el-button size="small" type="success" plain @click='finishMethod(item.userWithdrawId, 2)'>完成</el-button>

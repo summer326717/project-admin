@@ -153,7 +153,7 @@ export default {
 }
 .container .left-menu ul {
     overflow-y: scroll;
-    height: calc(100% - 80px);
+    height: calc(100% - 187px);
 }
 .container .left-menu ul::-webkit-scrollbar{
     display: none;
@@ -167,9 +167,11 @@ export default {
 .container .left-menu .sign-out {
   position: absolute;
   left: 0;
-  bottom: 20px;
+  bottom: 0;
   width: 100%;
+  padding: 10px 0;
   text-align: center;
+  border-top: 1px solid #484848;
 }
 .container .right-content {
     padding-left: 180px;

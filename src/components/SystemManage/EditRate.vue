@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>系统设置 > 汇率管理 > 修改汇率</span><button class="btn-gray" @click="reloadUser()">刷新</button></p>
+            <p><span>系统设置 > 汇率管理 > 修改汇率</span><button class="btn-gray" @click="back()">返回</button></p>
         </div>
         <div class="manage-detail">
             <div class="info-title">
@@ -22,11 +22,11 @@
             <div class="item">
                 <p>兑换规格：零钱 = 金币 * 汇率 / 1000</p>
                 <div>
-                    <input type="text">
+                    <el-input v-model="goldmoney" size="small" style="width:150px"></el-input>
                     <span>金币</span>
                     <span>=></span>
-                    <span>零钱（元）</span>
-                    <button>转换</button>
+                    <span>{{changemoney}}零钱（元）</span>
+                    <el-button type="success" size="small" @click="changeRate">转换</el-button>
                 </div>
                 <div class="tc"><button @click="updateRate" class="save-btn">保存</button></div>
             </div>
@@ -40,14 +40,20 @@ export default {
     return {
       nowTime: '', // 生效时间
       tomorTime: '', // 结算时间
-      goldRate: ''
+      goldRate: '',
+      goldmoney: '',
+      changemoney: ''
     }
   },
   created () {
+    this.goldRate = this.$route.query.goldRate
     this.tomorTime = new Date()
     this.nowTime = this.$changeTime(new Date())
   },
   methods: {
+    back () {
+      this.$router.back(-1)
+    },
     updateRate () {
       let json = {
         goldRate: this.goldRate
@@ -63,6 +69,11 @@ export default {
           this.$message.error(res.message)
         }
       })
+    },
+    changeRate () {
+      if (this.goldmoney) {
+        this.changemoney = ((this.goldmoney * this.goldRate) / 1000).toFixed(2)
+      }
     }
   }
 }

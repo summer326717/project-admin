@@ -1,7 +1,7 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>系统设置 > 汇率管理</span><button class="btn-gray" @click="reloadAgent()">刷新</button></p>
+            <p><span>系统设置 > 汇率管理</span><button class="btn-gray" @click="reloadRate()">刷新</button></p>
         </div>
         <div class="m-limit">
             <div class="m-title">
@@ -11,7 +11,7 @@
             </div>
             <div class="ptb20">
                 <span>生效日期：</span>
-                <input class="ipt-normal" type="text">
+                <el-date-picker format='yyyy-MM-dd' v-model="effectiveDate" type="date" placeholder="选择日期"></el-date-picker>
             </div>
         </div>
         <div class="m-table">
@@ -53,7 +53,7 @@
                         <td>{{$changeTime(item.effectiveDate)}}</td>
                         <td>{{item.rateDay}}</td>
                         <td>{{item.goldNum}}</td>
-                        <td>{{item.moneyNum}}</td>
+                        <td>{{(item.moneyNum/100).toFixed(2)}}</td>
                         <td>{{$changeTime(item.settlementTime)}}</td>
                     </tr>
                 </table>
@@ -86,6 +86,10 @@ export default {
     pagenation
   },
   methods: {
+    reloadRate () {
+      this.effectiveDate = ''
+      this.getData()
+    },
     getData () {
       let json = {
         pageNo: this.pageNo,
@@ -97,6 +101,9 @@ export default {
         if (res.code === 0) {
           this.resultList = res.data.resultList
           this.totalPages = res.data.pageTotal
+          if (this.pageNo === 1) {
+            this.goldRate = res.data.resultList[0].rateDay
+          }
         } else {
           this.resultList = []
         }
@@ -116,7 +123,7 @@ export default {
       this.getData()
     },
     updateRate () {
-      this.$router.push({ path: '/EditRate' })
+      this.$router.push({path: '/EditRate', query: { goldRate: this.goldRate }})
     }
   }
 }
