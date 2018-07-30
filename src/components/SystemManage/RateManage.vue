@@ -101,9 +101,6 @@ export default {
         if (res.code === 0) {
           this.resultList = res.data.resultList
           this.totalPages = res.data.pageTotal
-          if (this.pageNo === 1) {
-            this.goldRate = res.data.resultList[0].rateDay
-          }
         } else {
           this.resultList = []
         }
@@ -123,7 +120,7 @@ export default {
       this.getData()
     },
     updateRate () {
-      this.$router.push({path: '/EditRate', query: { goldRate: this.goldRate }})
+      this.$router.push({path: '/EditRate'})
     }
   }
 }

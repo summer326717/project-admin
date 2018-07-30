@@ -1,7 +1,12 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>代理人管理 > 添加用户</span><button class="btn-gray" @click="back()">返回</button></p>
+            <p>
+              <span v-if='type==1'>代理人管理 > 添加用户</span>
+              <span v-if='type==2'>代理人管理 > 查看用户</span>
+              <span v-if='type==3'>代理人管理 > 修改用户</span>
+              <button class="btn-gray" @click="back()">返回</button>
+            </p>
         </div>
         <div class="manage-detail">
             <div class="info-title">
@@ -67,16 +72,8 @@
                     <span>{{userObj.mobile}}</span>
                 </div>
                 <div class="item">
-                    <span class="left-span">微信/QQ</span>
-                    <span>--</span>
-                </div>
-                <div class="item">
                     <span class="left-span">代理人</span>
                     <span>{{userObj.agentId}} {{userObj.agentName}}</span>
-                </div>
-                <div class="item">
-                    <span class="left-span">地区</span>
-                    <span>--</span>
                 </div>
                 <div class="item">
                     <span class="left-span">注册时间</span>
@@ -119,6 +116,7 @@ let utils = require('../../utils/common')
 export default {
   data () {
     return {
+      type: 1, // 1.添加2.查看3.修改
       agentName: '',
       userObj: '',
       account: '',

@@ -47,21 +47,25 @@
                     <tr>
                         <th>代理人ID</th>
                         <th>姓名</th>
-                        <th>地区</th>
+                        <th>代理人等级</th>
+                        <th>上级代理人</th>
                         <th>手机号码</th>
-                        <th>微信/QQ</th>
                         <th>活跃时间</th>
                         <th>客户数量（人）</th>
+                        <th>代理数量（人）</th>
+                        <th>平台收益（元）</th>
                         <th>操作</th>
                     </tr>
                     <tr v-for="(item,i) in resultList" :key="i">
                         <td>{{item.agentId}}</td>
                         <td>{{item.name}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="male"></i></td>
-                        <td>--</td>
+                        <td></td>
+                        <td></td>
                         <td>{{item.mobile}}</td>
-                        <td>--</td>
                         <td>{{$changeTime(item.updateTime)}}</td>
                         <td>{{item.customerNum}}</td>
+                        <td></td>
+                        <td></td>
                         <td>
                             <router-link class="view-btn" :to='{path: "/AgentDetail", query: { type: 2, agentId: item.agentId}}'>查看</router-link>
                             <router-link class="edit-btn" :to='{path: "/AgentDetail", query: { type: 3, agentId: item.agentId}}'>修改</router-link>

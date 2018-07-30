@@ -46,15 +46,28 @@ export default {
     }
   },
   created () {
-    this.goldRate = this.$route.query.goldRate
     this.tomorTime = new Date()
     this.nowTime = this.$changeTime(new Date())
+    this.queryRate()
   },
   methods: {
     back () {
       this.$router.back(-1)
     },
+    queryRate () {
+      this.$axiosPost('/back/queryGoldToMnyRateUsing', '').then((res) => {
+        if (res.code === 0) {
+          this.goldRate = res.data
+        } else {
+          this.$message.error(res.message)
+        }
+      })
+    },
     updateRate () {
+      if (!this.goldRate) {
+        this.$message('汇率不能为空')
+        return
+      }
       let json = {
         goldRate: this.goldRate
       }

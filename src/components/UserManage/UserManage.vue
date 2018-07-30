@@ -64,7 +64,6 @@
                     <tr>
                         <th>用户ID</th>
                         <th>姓名</th>
-                        <th>地区</th>
                         <th>手机号码</th>
                         <th>账户余额（元）</th>
                         <th>上次登录时间</th>
@@ -75,7 +74,6 @@
                     <tr v-for="(item,i) in resultList" :key="i">
                         <td>{{item.userBaseId}}</td>
                         <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="male"></i></td>
-                        <td>--</td>
                         <td>{{item.mobile}}</td>
                         <td>{{(item.balance/100).toFixed(2)}}</td>
                         <td>{{$changeTime(item.lastLoginTime)}}</td>

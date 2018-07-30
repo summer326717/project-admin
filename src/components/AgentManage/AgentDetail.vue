@@ -1,7 +1,11 @@
 <template>
     <div class="manage-content">
         <div class="m-header">
-            <p><span>代理人管理 > 添加代理人</span><button class="btn-gray" @click="back()">返回</button></p>
+            <p>
+              <span v-if='type==1'>代理人管理 > 添加代理人</span>
+              <span v-if='type==2'>代理人管理 > 查看代理人</span>
+              <span v-if='type==3'>代理人管理 > 修改代理人</span>
+              <button class="btn-gray" @click="back()">返回</button></p>
         </div>
         <div class="manage-detail">
             <div class="info-title">
@@ -28,6 +32,15 @@
                 <div class="item">
                     <span class="left-span">*身份证号</span>
                     <input class="ipt-normal" type="text" placeholder="请输入身份证件号" v-model="idNumber">
+                </div>
+                <div class="item">
+                    <span class="left-span">*分润（%）</span>
+                    <input class="ipt-normal" type="text" placeholder="请输入分润（%）" v-model="idNumber">
+                </div>
+                <div class="item">
+                    <span class="left-span">*开设代理权限</span>
+                    <el-radio v-model="sex" label="1">不开通</el-radio>
+                    <el-radio v-model="sex" label="2">开通</el-radio>
                 </div>
                 <!--<div>
                     <span class="left-span">*身份证照片</span>
@@ -66,20 +79,13 @@
                     <span class="left-span">身份证号</span>
                     <span>{{userDetail.idNumber}}</span>
                 </div>
-                <!--<div class="item">
-                    <span class="left-span">身份证照片</span>
-                    <div>
-                        <p>tupian</p>
-                        <form enctype="multipart/form-data" style="display:none" id="uploadForm_default_tea">
-                        <input type="file" @change="uploadMethod" id="tea_cate_img" name="file" accept="image/png,image/gif,image/jpeg"/>
-                        <input type="hidden" name="goods" value="123456" />
-                        </form>
-                        <p><span @click="uploadImg">+</span><button>修改</button></p>
-                    </div>
-                </div>-->
                 <div class="item">
                     <span class="left-span">客户数量</span>
                     <span>{{userDetail.customerNum}}人</span>
+                </div>
+                <div class="item">
+                    <span class="left-span">代理数量</span>
+                    <span>人</span>
                 </div>
                 <div class="item">
                     <span class="left-span">注册时间</span>
@@ -89,6 +95,29 @@
                     <span class="left-span">活跃时间</span>
                     <span>{{$changeTime(userDetail.updateTime)}}</span>
                 </div>
+            </div>
+            <div class="info-title">
+                <span>账户信息</span>
+            </div>
+            <div class="ul">
+                <ul>
+                    <li>
+                        <p>{{(0/100).toFixed(2)}}</p>
+                        <p>账户余额</p>
+                    </li>
+                    <li>
+                        <p>{{(0/100).toFixed(2)}}</p>
+                        <p>总收益</p>
+                    </li>
+                    <li>
+                        <p>{{(0/100).toFixed(2)}}</p>
+                        <p>客户收益</p>
+                    </li>
+                    <li>
+                        <p>{{(0/100).toFixed(2)}}</p>
+                        <p>代理收益</p>
+                    </li>
+                </ul>
             </div>
         </div>
     </div>
