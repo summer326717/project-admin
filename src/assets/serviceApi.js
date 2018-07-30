@@ -1,4 +1,5 @@
 import axios from 'axios'
+import { Loading } from 'element-ui'
 const hexMd5 = require('crypto-js/md5')
 // const CryptoJS = require('crypto-js/core')
 // const AES = require('crypto-js/aes')
@@ -7,9 +8,17 @@ const hexMd5 = require('crypto-js/md5')
 axios.defaults.timeout = 5000
 axios.defaults.baseURL = '/advertisement/api/1'
 
+var loading
+
 // http request 拦截器
 axios.interceptors.request.use(
   config => {
+    loading = Loading.service({
+      lock: true,
+      text: '加载中...',
+      spinner: 'el-icon-loading',
+      background: 'rgba(0, 0, 0, 0.4)'
+    })
     let token = localStorage.getItem('token') // 注意使用的时候需要引入cookie方法，推荐js-cookie
     let stoken = sessionStorage.getItem('token')
     if (!token) {
@@ -38,6 +47,7 @@ axios.interceptors.request.use(
 // http response 拦截器
 axios.interceptors.response.use(
   response => {
+    loading.close()
     if (response.data.errCode === 2) {
       this.$message.error('错误')
     }
@@ -61,12 +71,6 @@ axios.interceptors.response.use(
 )
 
 export function axiosGet (url, params) {
-  const loading = this.$loading({
-    lock: true,
-    text: '加载中...',
-    spinner: 'el-icon-loading',
-    background: 'rgba(0, 0, 0, 0.3)'
-  })
   console.log(params)
   return new Promise((resolve, reject) => {
     axios.get(url, {params: params}).then(response => {
@@ -83,10 +87,8 @@ export function axiosGet (url, params) {
       if (response.data.code === 501) {
         this.$message.error(response.data.message + '，请将电脑系统时间设置正确。')
       }
-      loading.close()
       resolve(response.data)
     }).catch(err => {
-      loading.close()
       console.log(err)
       console.log(err.message)
       reject(err)
@@ -95,12 +97,6 @@ export function axiosGet (url, params) {
 }
 
 export function axiosPost (url, data) {
-  const loading = this.$loading({
-    lock: true,
-    text: '加载中...',
-    spinner: 'el-icon-loading',
-    background: 'rgba(0, 0, 0, 0.3)'
-  })
   console.log(data)
   return new Promise((resolve, reject) => {
     axios.post(url, data).then(response => {
@@ -117,10 +113,8 @@ export function axiosPost (url, data) {
         this.$message.error(response.data.message + '，请将电脑系统时间设置正确。')
       }
       console.log(response.data)
-      loading.close()
       resolve(response.data)
     }, err => {
-      loading.close()
       console.log(err)
       console.log(err.message)
       this.$message.error('接口出错，请稍后再试')
