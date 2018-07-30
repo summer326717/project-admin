@@ -19,16 +19,17 @@
                 <span class="left-span">*汇率</span>
                 <input class="ipt-normal" type="text" v-model="goldRate">
             </div>
-            <div class="item">
-                <p>兑换规格：零钱 = 金币 * 汇率 / 1000</p>
-                <div>
+            <div class="item tc">
+                <div style="width:500px;border:1px solid #dedede;border-radius:10px;padding:30px;display:inline-block;margin:20px 0;text-align:left;">
+                    <p style="padding-bottom:20px">兑换规格：零钱 = 金币 * 汇率 / 1000</p>
                     <el-input v-model="goldmoney" size="small" style="width:150px"></el-input>
                     <span>金币</span>
                     <span>=></span>
-                    <span>{{changemoney}}零钱（元）</span>
+                    <el-input v-model="changemoney" size="small" style="width:150px" disabled></el-input>
+                    <span>零钱（元）</span>
                     <el-button type="success" size="small" @click="changeRate">转换</el-button>
                 </div>
-                <div class="tc"><button @click="updateRate" class="save-btn">保存</button></div>
+                <div><button @click="updateRate" class="save-btn">保存</button></div>
             </div>
         </div>
     </div>
