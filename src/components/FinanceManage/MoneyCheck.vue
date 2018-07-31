@@ -45,7 +45,6 @@
             <div class="m-t-content">
                 <table>
                     <tr>
-                        <th></th>
                         <th>订单编号</th>
                         <th>用户ID</th>
                         <th>姓名</th>
@@ -56,7 +55,6 @@
                         <th>操作</th>
                     </tr>
                     <tr v-for="(item,i) in resultList" :key="i">
-                        <td></td>
                         <td>{{i+(pageNo-1)*pageSize}}</td>
                         <td>{{item.userId}}</td>
                         <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="male"></i></td>
