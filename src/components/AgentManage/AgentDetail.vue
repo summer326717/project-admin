@@ -85,7 +85,7 @@
                 </div>
                 <div class="item">
                     <span class="left-span">代理数量</span>
-                    <span>人</span>
+                    <span>{{userDetail.lowerLevelNum}}人</span>
                 </div>
                 <div class="item">
                     <span class="left-span">注册时间</span>
@@ -102,19 +102,19 @@
             <div class="ul">
                 <ul>
                     <li>
-                        <p>{{(0/100).toFixed(2)}}</p>
+                        <p>{{(userDetail.balance/100).toFixed(2)}}</p>
                         <p>账户余额</p>
                     </li>
                     <li>
-                        <p>{{(0/100).toFixed(2)}}</p>
+                        <p>{{(userDetail.totalProfit/100).toFixed(2)}}</p>
                         <p>总收益</p>
                     </li>
                     <li>
-                        <p>{{(0/100).toFixed(2)}}</p>
+                        <p>{{(userDetail.customerProfit/100).toFixed(2)}}</p>
                         <p>客户收益</p>
                     </li>
                     <li>
-                        <p>{{(0/100).toFixed(2)}}</p>
+                        <p>{{(userDetail.agentProfit/100).toFixed(2)}}</p>
                         <p>代理收益</p>
                     </li>
                 </ul>

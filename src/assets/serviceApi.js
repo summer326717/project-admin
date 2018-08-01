@@ -1,14 +1,24 @@
 import axios from 'axios'
+import Vue from 'vue'
 import { Loading } from 'element-ui'
 const hexMd5 = require('crypto-js/md5')
 // const CryptoJS = require('crypto-js/core')
 // const AES = require('crypto-js/aes')
 // const ECB = require('crypto-js/mode-ecb')
 
-axios.defaults.timeout = 5000
+axios.defaults.timeout = 60000 // 60秒后超时
 axios.defaults.baseURL = '/advertisement/api/1'
 
-var loading
+const CancelToken = axios.CancelToken
+let loading
+let cancel
+let cancelAjaxText = '中断成功'
+
+Vue.prototype.cancelAxios = function () {
+  if (cancel) {
+    cancel(cancelAjaxText)
+  }
+}
 
 // http request 拦截器
 axios.interceptors.request.use(
@@ -37,6 +47,10 @@ axios.interceptors.request.use(
       'Content-Type': 'application/json;charset=UTF-8',
       'token': token
     }
+    config.cancelToken = new CancelToken(c => {
+      // 强制中断请求
+      cancel = c
+    })
     return config
   },
   error => {
@@ -76,6 +90,12 @@ export function axiosGet (url, params) {
   return new Promise((resolve, reject) => {
     axios.get(url, {params: params}).then(response => {
       console.log(response.data)
+      if (response.message === cancelAjaxText) {
+        return {
+          status: false,
+          msg: cancelAjaxText
+        }
+      }
       if (response.data.code === 9999) {
         this.$message.error(response.data.message)
       }
@@ -101,6 +121,12 @@ export function axiosPost (url, data) {
   console.log(data)
   return new Promise((resolve, reject) => {
     axios.post(url, data).then(response => {
+      if (response.message === cancelAjaxText) {
+        return {
+          status: false,
+          msg: cancelAjaxText
+        }
+      }
       if (response.data.code === 9999) {
         this.$message.error(response.data.message)
       }

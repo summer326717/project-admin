@@ -35,6 +35,7 @@ router.afterEach((to, from, next) => {
 NProgress.configure({ showSpinner: true })
 
 router.beforeEach((to, from, next) => {
+  Vue.prototype.cancelAxios()
   NProgress.start()
   next()
 })

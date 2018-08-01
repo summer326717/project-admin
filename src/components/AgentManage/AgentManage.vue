@@ -59,13 +59,13 @@
                     <tr v-for="(item,i) in resultList" :key="i">
                         <td>{{item.agentId}}</td>
                         <td>{{item.name}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="male"></i></td>
-                        <td></td>
-                        <td></td>
+                        <td>{{item.level}}级</td>
+                        <td>{{item.parent}}</td>
                         <td>{{item.mobile}}</td>
                         <td>{{$changeTime(item.updateTime)}}</td>
                         <td>{{item.customerNum}}</td>
-                        <td></td>
-                        <td></td>
+                        <td>{{item.lowerLevelNum}}</td>
+                        <td>{{(item.totalProfit/100).toFixed(2)}}</td>
                         <td>
                             <router-link class="view-btn" :to='{path: "/AgentDetail", query: { type: 2, agentId: item.agentId}}'>查看</router-link>
                             <router-link class="edit-btn" :to='{path: "/AgentDetail", query: { type: 3, agentId: item.agentId}}'>修改</router-link>
