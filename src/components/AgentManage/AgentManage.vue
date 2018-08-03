@@ -60,7 +60,7 @@
                         <td>{{item.agentId}}</td>
                         <td>{{item.name}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="male"></i></td>
                         <td>{{item.level}}级</td>
-                        <td>{{item.parent}}</td>
+                        <td>{{item.creator}}</td>
                         <td>{{item.mobile}}</td>
                         <td>{{$changeTime(item.updateTime)}}</td>
                         <td>{{item.customerNum}}</td>

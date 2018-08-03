@@ -35,12 +35,12 @@
                 </div>
                 <div class="item">
                     <span class="left-span">*分润（%）</span>
-                    <input class="ipt-normal" type="text" placeholder="请输入分润（%）" v-model="idNumber">
+                    <input class="ipt-normal" type="text" placeholder="请输入分润（%）" v-model="sharePoint">
                 </div>
                 <div class="item">
                     <span class="left-span">*开设代理权限</span>
-                    <el-radio v-model="sex" label="1">不开通</el-radio>
-                    <el-radio v-model="sex" label="2">开通</el-radio>
+                    <el-radio v-model="agentState" label="1">不开通</el-radio>
+                    <el-radio v-model="agentState" label="2">开通</el-radio>
                 </div>
                 <!--<div>
                     <span class="left-span">*身份证照片</span>
@@ -96,10 +96,10 @@
                     <span>{{$changeTime(userDetail.updateTime)}}</span>
                 </div>
             </div>
-            <div class="info-title">
+            <div class="info-title" v-if='type==2'>
                 <span>账户信息</span>
             </div>
-            <div class="ul">
+            <div class="ul" v-if='type==2'>
                 <ul>
                     <li>
                         <p>{{(userDetail.balance/100).toFixed(2)}}</p>
@@ -136,7 +136,9 @@ export default {
       idNumber: '',
       type: 1, // 1.添加2.查看3.修改
       userDetail: '',
-      agentId: ''
+      agentId: '',
+      sharePoint: '',
+      agentState: '1'
     }
   },
   created () {
@@ -198,7 +200,9 @@ export default {
         name: this.name,
         mobile: this.mobile,
         sex: this.sex, // 0保密1男2女，默认保密
-        idNumber: this.idNumber
+        idNumber: this.idNumber,
+        sharePoint: this.sharePoint,
+        agentState: this.agentState
       }
       this.$axiosPost('/back/saveAgentInfo', json).then((res) => {
         if (res.code === 0) {
