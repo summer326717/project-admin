@@ -35,7 +35,7 @@
                 </div>
                 <div class="item">
                     <span class="left-span">*分润（%）</span>
-                    <input class="ipt-normal" type="number" placeholder="请输入类似0.01这样的小数" v-model="sharePoint">
+                    <input class="ipt-normal" type="number" placeholder="请输入0-5" v-model="sharePoint">
                 </div>
                 <div class="item">
                     <span class="left-span">*开设代理权限</span>
@@ -187,6 +187,14 @@ export default {
       }
       if (!/(^\d{15}$)|(^\d{18}$)|(^\d{17}(\d|X|x)$)/.test(this.idNumber)) {
         this.$message('请输入正确的身份证号码')
+        return false
+      }
+      if (!utils.checkNull(this.sharePoint)) {
+        this.$message('请输入分润')
+        return false
+      }
+      if ((this.sharePoint >= 0) && (this.sharePoint <= 5)) {
+        this.$message('分润范围为0 - 5%')
         return false
       }
       return true
