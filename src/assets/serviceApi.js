@@ -2,6 +2,7 @@ import axios from 'axios'
 import Vue from 'vue'
 import { Loading } from 'element-ui'
 const hexMd5 = require('crypto-js/md5')
+const Cookies = require('cookies-js')
 // const CryptoJS = require('crypto-js/core')
 // const AES = require('crypto-js/aes')
 // const ECB = require('crypto-js/mode-ecb')
@@ -29,13 +30,9 @@ axios.interceptors.request.use(
       spinner: 'el-icon-loading',
       background: 'rgba(0, 0, 0, 0.4)'
     })
-    let token = localStorage.getItem('token') // 注意使用的时候需要引入cookie方法，推荐js-cookie
-    let stoken = sessionStorage.getItem('token')
+    let token = Cookies.get('token')
     if (!token) {
       token = ''
-    }
-    if (stoken) {
-      token = stoken
     }
     let Timestamp = Date.parse(new Date())
     let SignInfo = hexMd5(Timestamp + 'IronMan')
@@ -103,6 +100,7 @@ export function axiosGet (url, params) {
         this.$message.error(response.data.message)
       }
       if (response.data.code === 100) {
+        Cookies.set('token', '')
         this.$router.push({path: 'Login'})
       }
       if (response.data.code === 501) {
@@ -134,6 +132,7 @@ export function axiosPost (url, data) {
         this.$message.error(response.data.message)
       }
       if (response.data.code === 100) {
+        Cookies.set('token', '')
         this.$router.push({path: 'Login'})
       }
       if (response.data.code === 501) {

@@ -20,6 +20,7 @@
 </template>
 
 <script>
+let Cookies = require('cookies-js')
 export default {
   name: 'Login',
   data () {
@@ -46,13 +47,8 @@ export default {
       this.$axiosPost('/adminLogin', json).then((res) => {
         if (res.code === 0) {
           this.$router.push({path: '/AgentManage'})
-          if (this.checked) {
-            localStorage.setItem('token', res.data.token)
-            localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
-          } else {
-            localStorage.setItem('token', res.data.token)
-            localStorage.setItem('userInfo', JSON.stringify(res.data.userInfo))
-          }
+          Cookies.set('token', res.data.token, { expires: 86400 }) // 七天
+          Cookies.set('userInfo', JSON.stringify(res.data.userInfo), { expires: 86400 })
         } else {
           alert(res.message)
         }

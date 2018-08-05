@@ -36,6 +36,7 @@
                 <div class="item">
                     <span class="left-span">*分润（%）</span>
                     <input class="ipt-normal" type="number" placeholder="请输入0-5" v-model="sharePoint">
+                    <span>（上限为5%）</span>
                 </div>
                 <div class="item">
                     <span class="left-span">*开设代理权限</span>
@@ -193,9 +194,14 @@ export default {
         this.$message('请输入分润')
         return false
       }
-      if ((this.sharePoint >= 0) && (this.sharePoint <= 5)) {
-        this.$message('分润范围为0 - 5%')
+      this.sharePoint = parseFloat(this.sharePoint)
+      if ((this.sharePoint < 0) || (this.sharePoint > 5)) {
+        this.$message('分润(%)范围为0 - 5')
         return false
+      }
+      if (!(/^\d*\.{0,1}\d{0,1}$/.test(this.sharePoint))) {
+        this.$message('分润(%)小数位最多只能为一位小数')
+        return
       }
       return true
     },
@@ -203,13 +209,14 @@ export default {
       if (!this.checkAgent()) {
         return
       }
+      let sharePoint = utils.divNum(this.sharePoint, 100)
       let json = {
         account: this.account,
         name: this.name,
         mobile: this.mobile,
         sex: this.sex, // 0保密1男2女，默认保密
         idNumber: this.idNumber,
-        sharePoint: parseFloat(this.sharePoint),
+        sharePoint: sharePoint,
         agentState: this.agentState
       }
       this.$axiosPost('/back/saveAgentInfo', json).then((res) => {
@@ -258,7 +265,7 @@ export default {
           this.mobile = res.data.mobile
           this.idNumber = res.data.idNumber
           this.name = res.data.name
-          this.sharePoint = res.data.sharePoint
+          this.sharePoint = utils.mulNum(res.data.sharePoint, 100)
           this.agentState = res.data.agentState.toString()
         } else {
           this.$message(res.message)
@@ -269,6 +276,7 @@ export default {
       if (!this.checkAgent()) {
         return
       }
+      let sharePoint = utils.divNum(this.sharePoint, 100)
       let json = {
         agentId: this.agentId,
         account: this.account,
@@ -276,7 +284,7 @@ export default {
         mobile: this.mobile,
         sex: this.sex, // 0保密1男2女，默认保密
         idNumber: this.idNumber,
-        sharePoint: parseFloat(this.sharePoint),
+        sharePoint: sharePoint,
         agentState: this.agentState
       }
       this.$axiosPost('/back/updateAgentInfo', json).then((res) => {
@@ -285,24 +293,6 @@ export default {
         } else {
           this.$message.error(res.message)
         }
-      })
-    },
-    uploadImg () {
-      document.getElementById('tea_cate_img').click()
-    },
-    uploadMethod () {
-      let files = document.getElementById('tea_cate_img').files
-      var fd = new FormData()
-      fd.append('file', files[0])
-      let config = {
-        headers: {
-          'Content-Type': 'multipart/form-data'
-        }
-      }
-      this.$axios.post('/fileUploadSave', fd, config).then(res => {
-        console.log(res)
-      }).catch(res => {
-        console.log(res)
       })
     }
   }

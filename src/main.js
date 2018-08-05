@@ -10,12 +10,31 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+let Cookies = require('cookies-js')
 
 Vue.prototype.$axiosGet = axiosGet
 Vue.prototype.$axiosPost = axiosPost
 Vue.prototype.$axios = axios
 Vue.prototype.$changeTime = changeTime
 Vue.config.productionTip = false
+
+NProgress.configure({ showSpinner: true })
+
+router.beforeEach((to, from, next) => {
+  Vue.prototype.cancelAxios()
+  if (to.path === '/' || to.path === '/Login') {
+    let token = Cookies.get('token')
+    if (token) {
+      next('/AgentManage')
+    } else {
+      NProgress.start()
+      next()
+    }
+  } else {
+    NProgress.start()
+    next()
+  }
+})
 // 路由结束后，如果不是登录页面就请求获取代理人列表，并本地储存，如果已存在就不用再次请求
 router.afterEach((to, from, next) => {
   if (to.path !== '/Login' && to.path !== '/') {
@@ -31,18 +50,10 @@ router.afterEach((to, from, next) => {
       })
     }
   }
-})
-NProgress.configure({ showSpinner: true })
-
-router.beforeEach((to, from, next) => {
-  Vue.prototype.cancelAxios()
-  NProgress.start()
-  next()
-})
-
-router.afterEach(transition => {
+  console.log('finish')
   NProgress.done()
 })
+
 Vue.use(ElementUI)
 /* eslint-disable no-new */
 new Vue({

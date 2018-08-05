@@ -3,7 +3,7 @@
         <div class="left-menu">
             <p class="menu-title">赏金猎人</p>
             <el-menu router
-              default-active="2"
+              :default-active="$route.path"
               class="el-menu-vertical-demo"
               @open="handleOpen"
               @close="handleClose"
@@ -52,6 +52,7 @@
 </template>
 
 <script>
+let Cookies = require('cookies-js')
 export default {
   name: '',
   data () {
@@ -102,8 +103,7 @@ export default {
   },
   methods: {
     signOut () {
-      localStorage.removeItem('token')
-      sessionStorage.removeItem('token')
+      Cookies.set('token', '')
       this.$router.push({path: '/'})
     },
     handleOpen (key, keyPath) {
