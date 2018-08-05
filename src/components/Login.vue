@@ -33,11 +33,11 @@ export default {
   methods: {
     LoginMethod () {
       if (this.account === '' || this.account === null || this.account === undefined) {
-        alert('手机号码不能为空')
+        this.$message('手机号码不能为空')
         return
       }
       if (this.password === '' || this.account === null || this.account === undefined) {
-        alert('密码不能为空')
+        this.$message('密码不能为空')
         return
       }
       let json = {
@@ -50,7 +50,7 @@ export default {
           Cookies.set('token', res.data.token, { expires: 86400 }) // 七天
           Cookies.set('userInfo', JSON.stringify(res.data.userInfo), { expires: 86400 })
         } else {
-          alert(res.message)
+          this.$message.error(res.message)
         }
       })
     }
