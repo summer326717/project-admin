@@ -3,7 +3,7 @@
 // see http://vuejs-templates.github.io/webpack for documentation.
 
 const path = require('path')
-const buildpath = 'dist-agent-' + (new Date).toLocaleDateString()
+const buildpath = 'dist-admin-' + (new Date).toLocaleDateString()
 module.exports = {
   dev: {
 

@@ -69,6 +69,10 @@ export default {
         this.$message('汇率不能为空')
         return
       }
+      if (!(/^\d*\.{0,1}\d{0,1}$/.test(this.goldRate))) {
+        this.$message('汇率小数位最多只能为一位小数')
+        return
+      }
       let json = {
         goldRate: this.goldRate
       }
@@ -85,9 +89,15 @@ export default {
       })
     },
     changeRate () {
-      if (this.goldmoney) {
-        this.$NP.secnum(this.$NP.divide(this.$NP.mulsec(this.goldmoney, this.goldRate), 1000), 2)
+      if (!this.goldmoney) {
+        this.$message('请输入金币数')
+        return
       }
+      if (!Number.isInteger(parseFloat(this.goldmoney))) {
+        this.$message('金币数为整数')
+        return
+      }
+      this.changemoney = this.$NP.round(this.$NP.divide(this.$NP.mulsec(this.goldmoney, this.goldRate), 1000), 3)
     }
   }
 }

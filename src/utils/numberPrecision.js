@@ -34,11 +34,12 @@ let mulsec = (number1, number2) => {
 }
 
 let divide = NP.divide
-
+let round = NP.round
 export default {
   secnum,
   div100,
   mulsec,
   mul100,
-  divide
+  divide,
+  round
 }

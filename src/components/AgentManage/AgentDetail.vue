@@ -136,7 +136,12 @@ export default {
       sex: '1',
       idNumber: '',
       type: 1, // 1.添加2.查看3.修改
-      userDetail: '',
+      userDetail: {
+        balance: 0,
+        totalProfit: 0,
+        customerProfit: 0,
+        agentProfit: 0
+      },
       agentId: '',
       sharePoint: '',
       agentState: '0'
@@ -209,7 +214,7 @@ export default {
       if (!this.checkAgent()) {
         return
       }
-      let sharePoint = this.$NP.mul100(this.sharePoint)
+      let sharePoint = this.$NP.divide(this.sharePoint, 100)
       let json = {
         account: this.account,
         name: this.name,
@@ -217,7 +222,7 @@ export default {
         sex: this.sex, // 0保密1男2女，默认保密
         idNumber: this.idNumber,
         sharePoint: sharePoint,
-        agentState: this.agentState
+        agentState: parseInt(this.agentState)
       }
       this.$axiosPost('/back/saveAgentInfo', json).then((res) => {
         if (res.code === 0) {
@@ -261,12 +266,13 @@ export default {
         if (res.code === 0) {
           this.userDetail = res.data
           this.account = res.data.account
-          this.sex = res.data.sex.toString()
+          this.sex = res.data.sex + ''
           this.mobile = res.data.mobile
           this.idNumber = res.data.idNumber
           this.name = res.data.name
-          this.sharePoint = this.$NP.div100(res.data.sharePoint)
-          this.agentState = res.data.agentState.toString()
+          this.sharePoint = this.$NP.mul100(res.data.sharePoint)
+          this.agentState = res.data.agentState + ''
+          this.balance = res.data.balance
         } else {
           this.$message(res.message)
         }
@@ -285,7 +291,7 @@ export default {
         sex: this.sex, // 0保密1男2女，默认保密
         idNumber: this.idNumber,
         sharePoint: sharePoint,
-        agentState: this.agentState
+        agentState: parseInt(this.agentState)
       }
       this.$axiosPost('/back/updateAgentInfo', json).then((res) => {
         if (res.code === 0) {

@@ -52,7 +52,6 @@ router.afterEach((to, from, next) => {
       })
     }
   }
-  console.log('finish')
   NProgress.done()
 })
 

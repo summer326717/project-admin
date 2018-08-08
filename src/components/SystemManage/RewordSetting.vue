@@ -61,9 +61,17 @@ export default {
         this.$message('每日金币上限不能为空')
         return false
       }
+      if (!Number.isInteger(parseFloat(this.goldDayUpperNum))) {
+        this.$message('请输入正确金币数')
+        return
+      }
       if (!utils.checkNull(this.goldRandomTime)) {
         this.$message('获取金币时间间隔不能为空')
         return false
+      }
+      if (!Number.isInteger(parseFloat(this.goldDayUpperNum))) {
+        this.$message('请输入正确获取金币时间间隔')
+        return
       }
       if (!utils.checkNull(this.goldLowerNum)) {
         this.$message('金币奖励范围下限不能为空')
@@ -72,6 +80,14 @@ export default {
       if (!utils.checkNull(this.goldUpperNum)) {
         this.$message('金币奖励范围上限不能为空')
         return false
+      }
+      if (!Number.isInteger(parseFloat(this.goldLowerNum))) {
+        this.$message('请输入正确金币奖励范围下限')
+        return
+      }
+      if (!Number.isInteger(parseFloat(this.goldUpperNum))) {
+        this.$message('请输入正确金币奖励范围上限')
+        return
       }
       if (parseInt(this.goldLowerNum) >= parseInt(this.goldUpperNum)) {
         this.$message('请输入正确范围值')
