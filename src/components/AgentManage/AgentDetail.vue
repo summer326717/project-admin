@@ -103,19 +103,19 @@
             <div class="ul" v-if='type==2'>
                 <ul>
                     <li>
-                        <p>{{(userDetail.balance/100).toFixed(2)}}</p>
+                        <p>{{$NP.div100(userDetail.balance)}}</p>
                         <p>账户余额</p>
                     </li>
                     <li>
-                        <p>{{(userDetail.totalProfit/100).toFixed(2)}}</p>
+                        <p>{{$NP.div100(userDetail.totalProfit)}}</p>
                         <p>总收益</p>
                     </li>
                     <li>
-                        <p>{{(userDetail.customerProfit/100).toFixed(2)}}</p>
+                        <p>{{$NP.div100(userDetail.customerProfit)}}</p>
                         <p>客户收益</p>
                     </li>
                     <li>
-                        <p>{{(userDetail.agentProfit/100).toFixed(2)}}</p>
+                        <p>{{$NP.div100(userDetail.agentProfit)}}</p>
                         <p>代理收益</p>
                     </li>
                 </ul>
@@ -209,7 +209,7 @@ export default {
       if (!this.checkAgent()) {
         return
       }
-      let sharePoint = utils.divNum(this.sharePoint, 100)
+      let sharePoint = this.$NP.mul100(this.sharePoint)
       let json = {
         account: this.account,
         name: this.name,
@@ -265,7 +265,7 @@ export default {
           this.mobile = res.data.mobile
           this.idNumber = res.data.idNumber
           this.name = res.data.name
-          this.sharePoint = utils.mulNum(res.data.sharePoint, 100)
+          this.sharePoint = this.$NP.div100(res.data.sharePoint)
           this.agentState = res.data.agentState.toString()
         } else {
           this.$message(res.message)
@@ -276,7 +276,7 @@ export default {
       if (!this.checkAgent()) {
         return
       }
-      let sharePoint = utils.divNum(this.sharePoint, 100)
+      let sharePoint = this.$NP.div100(this.sharePoint)
       let json = {
         agentId: this.agentId,
         account: this.account,

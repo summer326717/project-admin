@@ -61,10 +61,10 @@
                         <td>{{item.userId}}</td>
                         <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="male"></i></td>
                         <td>{{item.mobile}}</td>
-                        <td>{{(item.amount/100).toFixed(2)}}</td>
+                        <td>{{$NP.div100(item.amount)}}</td>
                         <td>{{$changeTime(item.createTime)}}</td>
-                        <td>{{(item.poundageAmount/100).toFixed(2)}}</td>
-                        <td>{{(item.moneyPayable/100).toFixed(2)}}</td>
+                        <td>{{$NP.div100(item.poundageAmount)}}</td>
+                        <td>{{$NP.div100(item.moneyPayable)}}</td>
                         <td>支付宝：{{item.sureAlipay}}</td>
                         <td>
                           <el-button size="small" type="success" plain @click='finishMethod(item.userWithdrawId, 2)'>完成</el-button>

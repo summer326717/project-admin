@@ -65,7 +65,7 @@
                         <td>{{$changeTime(item.updateTime)}}</td>
                         <td>{{item.customerNum}}</td>
                         <td>{{item.lowerLevelNum}}</td>
-                        <td>{{(item.totalProfit/100).toFixed(2)}}</td>
+                        <td>{{$NP.div100(item.totalProfit)}}</td>
                         <td>
                             <router-link class="view-btn" :to='{path: "/AgentDetail", query: { type: 2, agentId: item.agentId}}'>查看</router-link>
                             <router-link class="edit-btn" :to='{path: "/AgentDetail", query: { type: 3, agentId: item.agentId}}'>修改</router-link>

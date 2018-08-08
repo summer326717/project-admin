@@ -53,7 +53,7 @@
                         <td>{{$changeTime(item.effectiveDate)}}</td>
                         <td>{{item.rateDay}}</td>
                         <td>{{item.goldNum}}</td>
-                        <td>{{(item.moneyNum/100).toFixed(2)}}</td>
+                        <td>{{$NP.div100(item.moneyNum)}}</td>
                         <td>{{$changeTime(item.settlementTime)}}</td>
                     </tr>
                 </table>

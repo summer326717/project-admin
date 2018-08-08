@@ -89,15 +89,15 @@
                 <div class="ul">
                     <ul>
                         <li>
-                            <p>{{(userObj.balance/100).toFixed(2)}}</p>
+                            <p>{{$NP.div100(userObj.balance)}}</p>
                             <p>账户余额</p>
                         </li>
                         <li>
-                            <p>{{(userObj.totalEarnMoney/100).toFixed(2)}}</p>
+                            <p>{{$NP.div100(userObj.totalEarnMoney)}}</p>
                             <p>已赚取</p>
                         </li>
                         <li>
-                            <p>{{(userObj.yesterdayEarn/100).toFixed(2)}}</p>
+                            <p>{{$NP.div100(userObj.yesterdayEarn)}}</p>
                             <p>昨日收益</p>
                         </li>
                         <li>

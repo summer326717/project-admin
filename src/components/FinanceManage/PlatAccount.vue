@@ -57,7 +57,7 @@
                         <td>{{item.userId}}</td>
                         <td>{{item.nickName}}<i v-if='item.sex==2' class="female"></i><i v-if='item.sex==1' class="male"></i></td>
                         <td>{{item.mobile}}</td>
-                        <td>{{(item.amount/100).toFixed(2)}}</td>
+                        <td>{{$NP.div100(item.amount)}}</td>
                         <td>{{$changeTime(item.createTime)}}</td>
                         <td style="text-align:left">
                             <p v-if='item.state==3'>{{$changeTime(item.createTime)}}</p>

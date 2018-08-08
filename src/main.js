@@ -10,8 +10,10 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
+import NP from './utils/numberPrecision'
 let Cookies = require('cookies-js')
 
+Vue.prototype.$NP = NP
 Vue.prototype.$axiosGet = axiosGet
 Vue.prototype.$axiosPost = axiosPost
 Vue.prototype.$axios = axios

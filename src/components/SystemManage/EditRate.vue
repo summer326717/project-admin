@@ -86,7 +86,7 @@ export default {
     },
     changeRate () {
       if (this.goldmoney) {
-        this.changemoney = ((this.goldmoney * this.goldRate) / 1000).toFixed(2)
+        this.$NP.secnum(this.$NP.divide(this.$NP.mulsec(this.goldmoney, this.goldRate), 1000), 2)
       }
     }
   }
