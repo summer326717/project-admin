@@ -26,8 +26,8 @@ export default {
   data () {
     return {
       checked: false,
-      account: 'cupid',
-      password: '123456'
+      account: '', // cupid
+      password: ''
     }
   },
   methods: {
