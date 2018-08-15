@@ -43,7 +43,7 @@
                         </span>
                         <el-dropdown-menu slot="dropdown">
                             <el-dropdown-item command="1">正序</el-dropdown-item>
-                            <el-dropdown-item command="2">倒叙</el-dropdown-item>
+                            <el-dropdown-item command="2">倒序</el-dropdown-item>
                         </el-dropdown-menu>
                     </el-dropdown>
                 </span>
@@ -105,7 +105,7 @@ export default {
       nickName: '',
       pageNo: 1,
       pageSize: 10,
-      sortType: 2, // 1正序2倒叙，默认倒叙
+      sortType: 2, // 1正序2倒叙，默认倒序
       totalPages: 1,
       agentList: [],
       resultList: []
