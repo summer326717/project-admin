@@ -117,8 +117,8 @@ export default {
       let json = {
         userName: this.nickName,
         phoneNo: this.mobile,
-        pageNo: '',
-        pageSize: '',
+        pageNo: this.pageNo,
+        pageSize: this.pageSize,
         sortType: this.sortType,
         state: '23'
       }
@@ -132,24 +132,8 @@ export default {
         }
       })
     },
-    passCheck () {
-      let json = {
-        rejectReason: '',
-        userWithdrawId: ''
-      }
-      this.$axiosPost('/back/handleWithdrawInfo', json).then((res) => {
-        if (res.code === 0) {
-          this.$message({
-            message: res.message,
-            type: 'success'
-          })
-          this.getData()
-        } else {
-          this.$message.error(res.message)
-        }
-      })
-    },
     getPage (e) {
+      console.log(e)
       this.pageNo = e
       this.getData()
     },

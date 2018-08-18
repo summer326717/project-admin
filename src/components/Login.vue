@@ -26,8 +26,15 @@ export default {
   data () {
     return {
       checked: false,
-      account: '', // cupid
+      account: '',
       password: ''
+    }
+  },
+  created () {
+    // 如果是本地环境或测试环境显示登录名及密码
+    if (location.href.indexOf('localhost') > -1 || location.href.indexOf('admin.innjoe.net') > -1) {
+      this.account = 'cupid'
+      this.password = '123456'
     }
   },
   methods: {
